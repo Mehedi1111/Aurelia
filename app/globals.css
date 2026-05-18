@@ -1,0 +1,648 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-bg text-text font-sans;
+    font-size: 16px;
+  }
+
+  ::selection {
+    background-color: #f5ebe7;
+    color: #b8826f;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2;
+  }
+
+  /* Mobile-first base typography */
+  p { @apply leading-relaxed; }
+}
+
+/* ─── WordPress Table Styles ────────────────────────────────────────────── */
+/*
+ * All inline style="" and <style> blocks stripped by parseContent.ts.
+ * These classes replace them — defined once, applied to all 200+ posts.
+ */
+@layer components {
+
+  .wp-table-wrapper {
+    @apply overflow-x-auto my-8 rounded-lg border border-border;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .wp-table {
+    @apply min-w-full border-collapse text-sm;
+  }
+
+  .wp-thead th {
+    @apply bg-dark text-white font-serif font-normal text-left py-3 px-4 text-sm;
+    letter-spacing: 0.03em;
+  }
+
+  .wp-tbody tr {
+    @apply border-b border-border;
+  }
+
+  .wp-tbody tr:last-child {
+    @apply border-b-0;
+  }
+
+  .wp-tbody tr:hover {
+    background-color: #fdf7f5;
+  }
+
+  .wp-tbody tr:nth-child(even) {
+    @apply bg-surface;
+  }
+
+  .wp-tbody td {
+    @apply py-3 px-4 align-top text-sm;
+  }
+
+  /* ─── Post Content ────────────────────────────────────────────────── */
+
+  .wp-content {
+    @apply prose prose-aurelia max-w-none;
+  }
+
+  .wp-content img {
+    @apply rounded-md;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Prevent figures from overflowing their column */
+  .wp-content figure {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* ─── Lasso → au-retailer affiliate cards ───────────────────────── */
+  .au-retailer {
+    border: 1px solid #ede8e4;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .au-retailer-header {
+    background: #111111;
+    padding: 14px 20px;
+  }
+  .au-retailer-name {
+    color: #ffffff !important;
+    font-family: 'Marcellus', Georgia, serif;
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+  .au-retailer-body {
+    padding: 20px;
+    background: #f9f6f4;
+    font-size: 0.93em;
+    color: #4a4a4a;
+    line-height: 1.7;
+  }
+  .au-retailer-body p { margin: 0 0 10px !important; }
+  .au-retailer-body p:last-child { margin-bottom: 0 !important; }
+  .au-retailer-body ul { margin: 10px 0 !important; padding-left: 20px; }
+  .au-retailer-body li { margin-bottom: 5px; }
+  .au-retailer-body strong { color: #111; }
+  .au-retailer-cta {
+    display: block;
+    background: #d19b8a;
+    color: #ffffff !important;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.88em;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: none !important;
+    letter-spacing: 0.03em;
+    border-bottom: none !important;
+    transition: background-color 0.2s;
+  }
+  .au-retailer-cta:hover { background: #b8826f; }
+
+  /* Blockquotes */
+  .wp-content blockquote {
+    @apply border-l-4 border-accent bg-surface not-italic pl-5 py-4 my-8;
+  }
+
+  /* WordPress galleries */
+  .wp-content .wp-block-gallery {
+    @apply grid grid-cols-2 md:grid-cols-3 gap-3 my-8;
+  }
+
+  /* Inline affiliate links in content */
+  .wp-content a[href*="jamesallen.com"],
+  .wp-content a[href*="bluenile.com"],
+  .wp-content a[href*="charlesandcolvard"],
+  .wp-content a[href*="amazon.com"],
+  .wp-content a[href*="amzn.to"],
+  .wp-content a[href*="/go/"] {
+    @apply no-underline border-b-0 text-inherit font-medium;
+    border-bottom: 1px solid #e8d5ce;
+  }
+
+  /* ─── Affiliate Disclosure ───────────────────────────────────────── */
+  .affiliate-disclosure {
+    @apply text-xs text-text-muted bg-surface border border-border rounded-md px-4 py-3 flex items-start gap-2 leading-relaxed;
+  }
+
+  /* ─── TOC ──────────────────────────────────────────────────────────  */
+  .toc-link {
+    @apply block text-xs text-text-muted py-1.5 leading-snug transition-colors duration-150;
+    border-left: 2px solid transparent;
+    padding-left: 0.75rem;
+  }
+
+  .toc-link:hover {
+    color: #d19b8a;
+    border-left-color: #d19b8a;
+  }
+
+  .toc-link.active {
+    color: #d19b8a;
+    border-left-color: #d19b8a;
+    font-weight: 500;
+  }
+
+  .toc-link-h3 {
+    @apply pl-5 text-[11px] text-text-subtle;
+  }
+
+  /* ─── Deal Notices (bn-deal-*) ───────────────────────────────────────
+   * Originally inline <style> blocks in WP content — extracted to here
+   * so they're loaded once instead of repeated per post.
+   */
+  .bn-deal-wrapper {
+    width: 100%;
+    margin: 28px 0;
+    box-sizing: border-box;
+  }
+  .bn-deal-notice {
+    background-color: #FFFBF3;
+    border: 1px solid #F0E8D9;
+    border-radius: 8px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  .bn-deal-notice p { margin: 0; line-height: 1.5; }
+  .bn-deal-alert {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 10px !important;
+    color: #1a1a1a;
+  }
+  .bn-deal-callout {
+    font-family: 'Marcellus', Georgia, serif;
+    font-style: italic;
+    color: #A38450;
+    font-size: 1.05em;
+    margin-right: 4px;
+  }
+  .bn-deal-vault {
+    margin: 12px 0 0;
+    padding: 12px 0 0;
+    border-top: 1px solid #E8E0D5;
+  }
+  .bn-vault-text { font-size: 1em; margin: 0; }
+  .bn-vault-callout {
+    font-family: 'Marcellus', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    color: #8B4513;
+    font-size: 1.05em;
+    margin-right: 4px;
+  }
+  .bn-vault-highlight { color: #B22222; font-weight: 700; }
+  .bn-custom-link {
+    font-weight: 700;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 2px solid #A38450;
+    cursor: pointer;
+  }
+  .bn-secondary-link {
+    font-weight: 700;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid #111;
+    cursor: pointer;
+  }
+  .bn-custom-link:hover,
+  .bn-secondary-link:hover { color: #A38450; border-bottom-color: #A38450; }
+  .bn-deal-hr { border: 0; border-top: 1px dashed #E0D8CE; margin: 14px 0; }
+  .bn-bonus-deal { font-weight: 400; font-size: 0.93em; margin-bottom: 8px !important; }
+  .bn-bonus-deal:last-child { margin-bottom: 0 !important; }
+  .bn-bonus-callout {
+    font-family: 'Marcellus', Georgia, serif;
+    font-style: italic;
+    color: #777;
+    font-size: 1em;
+    margin-right: 4px;
+  }
+
+  /* ─── Spectra → au-notice (inline tip/callout boxes) ─────────────── */
+  .au-notice {
+    background: #F9F6F4;
+    border-left: 3px solid #d19b8a;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 24px 0;
+  }
+  .au-notice-title {
+    font-family: 'Marcellus', Georgia, serif;
+    font-size: 0.95em;
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 6px !important;
+  }
+  .au-notice-body { font-size: 0.9em; color: #4a4a4a; }
+  .au-notice-body p { margin: 0 !important; }
+  .au-notice-body a { color: #d19b8a; }
+
+  /* ─── Spectra → au-faq (FAQ accordion → styled list) ────────────── */
+  .au-faq { margin: 32px 0; }
+  .au-faq-item {
+    border-bottom: 1px solid #ede8e4;
+    padding: 18px 0;
+  }
+  .au-faq-item:first-child { border-top: 1px solid #ede8e4; }
+  .au-faq-q {
+    font-family: 'Marcellus', Georgia, serif;
+    font-size: 1.05em;
+    color: #111;
+    margin: 0 0 10px !important;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .au-faq-a { font-size: 0.93em; color: #4a4a4a; line-height: 1.7; }
+  .au-faq-a p { margin: 0 0 8px !important; }
+  .au-faq-a p:last-child { margin-bottom: 0 !important; }
+
+  /* ─── Pinterest hover button on content images ───────────────────── */
+  .wp-pin-wrap {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .wp-pin-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #E60023;
+    color: white;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    text-decoration: none !important;
+    border: none !important;
+  }
+  .wp-pin-wrap:hover .wp-pin-btn,
+  .wp-pin-wrap:focus-within .wp-pin-btn {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  .wp-pin-btn:hover { background: #c0001d; }
+
+  /* ─── Decorative character replacements ──────────────────────────── */
+  .au-divider {
+    border: 0;
+    border-top: 1px solid #ede8e4;
+    margin: 28px 0;
+  }
+  .au-bullet {
+    padding-left: 1.25em;
+    position: relative;
+    margin-bottom: 6px !important;
+  }
+  .au-bullet::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #d19b8a;
+    font-weight: 700;
+  }
+
+  /* ─── Diamond IQ Quiz (custom HTML block from WordPress) ────────── */
+  .quiz-section {
+    background-color: #111111;
+    padding: 32px 24px;
+    text-align: center;
+    border-radius: 16px;
+    margin: 40px auto;
+    max-width: 800px;
+    box-sizing: border-box;
+  }
+  .quiz-section .quiz-title p {
+    color: #ffffff;
+    font-family: 'Marcellus', Georgia, serif;
+    font-size: 1.8em;
+    font-weight: 400;
+    line-height: 1.25;
+    margin: 0 0 16px;
+  }
+  .quiz-section .description {
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95em;
+    line-height: 1.65;
+    margin-top: 20px;
+  }
+  .quiz-section .diamond-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .quiz-section .diamond-option {
+    flex-basis: 45%;
+    max-width: 220px;
+  }
+  .quiz-section .diamond-option a { text-decoration: none; }
+  .quiz-section img {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    transition: border-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+  }
+  .quiz-section .diamond-option:hover img { border-color: #d19b8a; }
+  .quiz-section button {
+    display: block;
+    margin: 10px auto 0;
+    padding: 10px 24px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    color: #111111;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .quiz-section button:hover {
+    background-color: #d19b8a;
+    color: #ffffff;
+  }
+  .quiz-section .price-natural { color: #FFD700; font-weight: 700; }
+  .quiz-section .price-lab     { color: #00E6E6; font-weight: 700; }
+  @media (min-width: 600px) {
+    .quiz-section { max-width: 950px; padding: 48px 40px; }
+    .quiz-section .quiz-title p { font-size: 2.4em; }
+    .quiz-section .diamond-options { gap: 50px; }
+    .quiz-section img { max-width: 250px; }
+    .quiz-section .description { font-size: 1.05em; }
+  }
+
+  /* ─── Deal promo boxes (aurelia-promo-vault-notice / aurelia-rare-carat-promo) ── */
+  .au-deal-promo {
+    background-color: #FFFBF3;
+    border: 1px solid #F0E8D9;
+    border-radius: 10px;
+    padding: 28px 24px;
+    margin: 32px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .au-deal-promo-hl {
+    font-family: 'Marcellus', Georgia, serif;
+    font-style: italic;
+    color: #A38450;
+    font-size: 1.2em;
+    margin: 0 0 10px !important;
+    line-height: 1.35;
+  }
+  .au-deal-promo-offer {
+    font-weight: 700;
+    font-size: 1.05em;
+    color: #111;
+    line-height: 1.5;
+    margin: 0 0 18px !important;
+  }
+  .au-deal-promo-cta {
+    display: inline-block;
+    background: #111111;
+    color: #d19b8a !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95em;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+    margin-bottom: 14px;
+  }
+  .au-deal-promo-cta:hover { color: #ffffff !important; }
+  .au-deal-promo-note {
+    font-size: 0.83em;
+    color: #737373;
+    margin-top: 10px !important;
+    line-height: 1.5;
+  }
+  .au-deal-promo-note-link {
+    color: #A38450;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  /* ─── Ritani / generic deal promo code badge ─────────────────────── */
+  .au-promo-code {
+    display: inline-block;
+    background: #111111;
+    color: white;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    letter-spacing: 0.05em;
+    margin: 4px 0;
+  }
+
+  /* ─── Product FAQ section title ──────────────────────────────────── */
+  .au-faq-section-title {
+    font-family: 'Marcellus', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.25em;
+    color: #111;
+    margin: 0 0 20px !important;
+  }
+
+  /* ─── Retailer review boxes ─────────────────────────────────────── */
+  .au-review-box {
+    border: 1px solid #ede8e4;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 32px 0;
+    background: #fff;
+  }
+  .au-review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: #faf8f6;
+    border-bottom: 1px solid #ede8e4;
+  }
+  .au-review-logo {
+    display: block;
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+  .au-review-header-name {
+    font-family: 'Marcellus', Georgia, serif;
+    font-size: 1.05em;
+    color: #111;
+  }
+  .au-review-scores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #ede8e4;
+  }
+  .au-review-score {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #faf8f6;
+    border: 1px solid #ede8e4;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.82em;
+  }
+  .au-review-score-label { color: #6b6b6b; }
+  .au-review-stars { color: #d19b8a; font-weight: 600; }
+  .au-review-body {
+    padding: 16px 20px;
+    font-size: 0.92em;
+    color: #4a4a4a;
+    line-height: 1.7;
+    border-bottom: 1px solid #ede8e4;
+  }
+  .au-review-body p { margin: 0 0 10px !important; }
+  .au-review-body p:last-child { margin-bottom: 0 !important; }
+  .au-review-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid #ede8e4;
+  }
+  .au-review-pros,
+  .au-review-cons {
+    padding: 14px 20px;
+    font-size: 0.86em;
+  }
+  .au-review-pros { border-right: 1px solid #ede8e4; }
+  .au-review-pros-title,
+  .au-review-cons-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.88em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .au-review-pros-title { color: #27ae60; }
+  .au-review-cons-title { color: #e74c3c; }
+  .au-review-pros ul,
+  .au-review-cons ul {
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .au-review-pros li,
+  .au-review-cons li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 5px;
+    color: #4a4a4a;
+    line-height: 1.4;
+  }
+  .au-review-pros li::before { content: '✓'; color: #27ae60; flex-shrink: 0; font-weight: 700; }
+  .au-review-cons li::before { content: '✗'; color: #e74c3c; flex-shrink: 0; font-weight: 700; }
+  .au-review-cta {
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .au-review-cta-btn {
+    display: inline-block;
+    background: #d19b8a;
+    color: #fff !important;
+    font-size: 0.88em;
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    text-decoration: none !important;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .au-review-cta-btn:hover { background: #b07a69; }
+  @media (max-width: 600px) {
+    .au-review-pros-cons { grid-template-columns: 1fr; }
+    .au-review-pros { border-right: none; border-bottom: 1px solid #ede8e4; }
+  }
+
+  /* ─── Category description HTML ─────────────────────────────────── */
+  .category-description h2 {
+    @apply font-serif text-xl text-dark mt-6 mb-3;
+  }
+  .category-description p {
+    @apply text-text-muted text-sm leading-relaxed mb-4;
+  }
+  .category-description ul {
+    @apply list-disc pl-5 space-y-2 text-sm text-text-muted mb-4;
+  }
+  .category-description strong { @apply text-dark font-medium; }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #ede8e4 transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; height: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background-color: #ede8e4; border-radius: 9999px; }
+}

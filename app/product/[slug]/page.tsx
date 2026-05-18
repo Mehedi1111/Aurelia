@@ -223,11 +223,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* CTA */}
             <div className="mb-6">
               <AffiliateButton
-                href={`/go/${slug}/`}
-                retailer="View on Retailer"
+                href={product.externalUrl || `https://moissanitebyaurelia.com/product/${slug}/`}
                 label="Shop This Product"
                 size="lg"
-                className="w-full justify-center"
+                className="w-full"
               />
             </div>
 

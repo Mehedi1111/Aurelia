@@ -92,6 +92,7 @@ export interface WPProduct {
   regularPrice: string
   salePrice: string | null
   onSale: boolean
+  externalUrl?: string | null
   image?: WPImage
   galleryImages: { nodes: WPImage[] }
   productCategories: { nodes: WPCategory[] }

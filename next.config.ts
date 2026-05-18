@@ -2,21 +2,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'moissanitebyaurelia.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cms.moissanitebyaurelia.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'secure.gravatar.com',
-      },
+      { protocol: 'https', hostname: '**' },
     ],
-    formats: ['image/avif', 'image/webp'],
   },
 
   async rewrites() {

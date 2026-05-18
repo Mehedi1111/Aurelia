@@ -6,6 +6,7 @@ import { getProducts, getAllProductCategories } from '@/lib/graphql/queries/prod
 import { getAllCategories } from '@/lib/graphql/queries/categories'
 import PostCard from '@/components/blog/PostCard'
 import ProductCard from '@/components/products/ProductCard'
+import BrowseBar from '@/components/layout/BrowseBar'
 
 export const metadata: Metadata = {
   title: 'Moissanite by Aurelia — Diamond, Gemstone & Moissanite Jewelry Guides',
@@ -71,6 +72,18 @@ export default async function HomePage() {
   const topBlogCats = blogCats
     .filter(c => !c.ancestors?.nodes?.length && (c.count ?? 0) > 0)
     .slice(0, 10)
+
+  const guideItems = [
+    ...GUIDES,
+    ...topBlogCats
+      .filter(c => !GUIDES.some(g => g.href.includes(c.slug)))
+      .map(c => ({ label: c.name, href: `/category/${c.slug}/` })),
+  ]
+
+  const shopItems = [
+    { label: 'All Jewelry', href: '/shop-fine-jewelry/' },
+    ...productCats.map(c => ({ label: c.name, href: `/product-category/${c.slug}/` })),
+  ]
 
   return (
     <>
@@ -145,37 +158,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Quick links bar ── */}
-      <section className="border-b border-border bg-surface">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-2.5">
-          {/* Guides row — curated static links + dynamic blog categories */}
-          <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-[11px] text-text-subtle uppercase tracking-widest shrink-0 hidden sm:block">Guides:</span>
-            {GUIDES.map(g => (
-              <Link key={g.label} href={g.href} className="text-[12px] text-text-muted border border-border bg-bg px-3.5 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">
-                {g.label}
-              </Link>
-            ))}
-            {topBlogCats.filter(c => !GUIDES.some(g => g.href.includes(c.slug))).map(c => (
-              <Link key={c.slug} href={`/category/${c.slug}/`} className="text-[12px] text-text-muted border border-border bg-bg px-3.5 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">
-                {c.name}
-              </Link>
-            ))}
-          </div>
-          {/* Shop categories row */}
-          {productCats.length > 0 && (
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="text-[11px] text-text-subtle uppercase tracking-widest shrink-0 hidden sm:block">Shop:</span>
-              <Link href="/shop-fine-jewelry/" className="text-[12px] text-text-muted border border-border bg-bg px-3.5 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">All Jewelry</Link>
-              {productCats.map(c => (
-                <Link key={c.slug} href={`/product-category/${c.slug}/`} className="text-[12px] text-text-muted border border-border bg-bg px-3.5 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors">
-                  {c.name}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      {/* ── Browse bar ── */}
+      <BrowseBar guideItems={guideItems} shopItems={shopItems} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
 

@@ -238,4 +238,4 @@ export default async function PostPage({ params }: PostPageProps) {
   )
 }
 
-export const revalidate = 86400
+export const revalidate = 3600

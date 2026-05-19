@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import PearlValueCalculator from '@/components/calculators/PearlValueCalculator'
+import { getCurrentDateInfo } from '@/lib/utils/currentDate'
+
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   title: 'Pearl Value Calculator — How Much Is My Pearl Worth? [2026]',
@@ -57,9 +60,17 @@ const SCHEMA = [
 ]
 
 export default function PearlValueCalculatorPage() {
+  const { year, monthYear, iso } = getCurrentDateInfo()
+  const dateModSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: 'https://moissanitebyaurelia.com/pearl-value-calculator/',
+    dateModified: iso,
+  }
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dateModSchema) }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         <header className="max-w-3xl mx-auto text-center mb-10">
@@ -76,6 +87,11 @@ export default function PearlValueCalculatorPage() {
 
         {/* ── Article Content ── */}
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
+
+          <p className="flex items-center gap-2 text-xs text-text-muted">
+            <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            Price data updated: <time dateTime={iso} className="font-medium text-dark">{monthYear}</time>
+          </p>
 
           <section>
             <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Pearl Value Calculator</h2>
@@ -118,7 +134,7 @@ export default function PearlValueCalculatorPage() {
 
           {/* 2026 Pearl Price Chart */}
           <section>
-            <h2 className="font-serif text-2xl text-dark mb-4">2026 Pearl Price Chart — By Type & Size</h2>
+            <h2 className="font-serif text-2xl text-dark mb-4">{year} Pearl Price Chart — By Type & Size</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
               Per-pearl retail price ranges for cultured pearls in good-to-excellent quality (high luster, lightly blemished, near-round):
             </p>

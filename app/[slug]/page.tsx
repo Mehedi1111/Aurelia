@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from '@/lib/graphql/queries/posts'
+import { getCurrentDateInfo } from '@/lib/utils/currentDate'
 import { extractTableOfContents, extractFAQs, extractReviewRating } from '@/lib/content/parseContent'
 import PostBody from '@/components/blog/PostBody'
 import TableOfContents from '@/components/blog/TableOfContents'
@@ -54,9 +55,15 @@ export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostBySlug(slug)
   if (!post) notFound()
 
-  const tocEntries = extractTableOfContents(post.content)
-  const faqEntries = extractFAQs(post.content)
-  const reviewRating = extractReviewRating(post.content)
+  const { year, month, monthYear, iso } = getCurrentDateInfo()
+  const processedContent = post.content
+    .replace(/\[month_year\]/gi, monthYear)
+    .replace(/\[month\]/gi, month)
+    .replace(/\[year\]/gi, String(year))
+
+  const tocEntries = extractTableOfContents(processedContent)
+  const faqEntries = extractFAQs(processedContent)
+  const reviewRating = extractReviewRating(processedContent)
   const primaryCategory = post.categories.nodes[0]
   const relatedPosts = primaryCategory
     ? await getRelatedPosts(primaryCategory.slug, slug, 3)
@@ -144,15 +151,16 @@ export default async function PostPage({ params }: PostPageProps) {
               {primaryCategory.name}
             </Link>
           )}
-          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-dark mt-3 mb-4 leading-snug text-balance">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-dark mt-3 mb-3 leading-snug text-balance">
             {post.title}
           </h1>
+          <p className="flex items-center gap-1.5 text-xs text-text-muted mb-3">
+            <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            Last updated: <time dateTime={post.modified} className="font-medium text-dark">{formatDate(post.modified)}</time>
+          </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
             <span>By <Link href="/about-mehedi/" className="text-dark font-medium hover:text-accent transition-colors">{post.author.node.name}</Link></span>
             <time dateTime={post.date}>{formatDate(post.date)}</time>
-            {post.modified !== post.date && (
-              <span className="text-text-subtle">Updated {formatDate(post.modified)}</span>
-            )}
           </div>
         </header>
 
@@ -173,7 +181,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_264px] gap-12">
           {/* Article */}
           <article className="min-w-0">
-            <PostBody content={post.content} />
+            <PostBody content={processedContent} />
 
             {/* Tags */}
             {post.tags.nodes.length > 0 && (

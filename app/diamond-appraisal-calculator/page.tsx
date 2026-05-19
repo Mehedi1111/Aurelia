@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import DiamondAppraisalCalculator from '@/components/calculators/DiamondAppraisalCalculator'
+import { getCurrentDateInfo } from '@/lib/utils/currentDate'
+
+export const revalidate = 86400
 
 export const metadata: Metadata = {
   title: "Diamond Appraisal Calculator — What Is My Diamond Worth? [2026]",
@@ -57,9 +60,17 @@ const SCHEMA = [
 ]
 
 export default function DiamondAppraisalCalculatorPage() {
+  const { year, monthYear, iso } = getCurrentDateInfo()
+  const dateModSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: 'https://moissanitebyaurelia.com/diamond-appraisal-calculator/',
+    dateModified: iso,
+  }
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dateModSchema) }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         <header className="max-w-3xl mx-auto text-center mb-10">
@@ -77,6 +88,11 @@ export default function DiamondAppraisalCalculatorPage() {
         {/* ── Article Content ── */}
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
+          <p className="flex items-center gap-2 text-xs text-text-muted">
+            <svg className="w-3.5 h-3.5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            Price data updated: <time dateTime={iso} className="font-medium text-dark">{monthYear}</time>
+          </p>
+
           <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Why Your &ldquo;Retail&rdquo; Appraisal Is an Industry Myth</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
@@ -88,15 +104,15 @@ export default function DiamondAppraisalCalculatorPage() {
               If you recently bought an elite D-color VVS diamond, the store likely handed you an appraisal for nearly double what you paid. This is the <strong>Retail Replacement Value</strong> — the absolute highest cost for an insurance company to buy that ring tomorrow at full retail price. It&apos;s great for your ego, but it&apos;s a debt anchor. You&apos;re paying monthly insurance premiums based on this inflated number for a gem you could replace today at a reputable online retailer for half that amount.
             </p>
 
-            <h3 className="font-serif text-lg text-dark mb-2">2. The Lab-Grown Divergence: 2026 Price Shocks</h3>
+            <h3 className="font-serif text-lg text-dark mb-2">2. The Lab-Grown Divergence: {year} Price Shocks</h3>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
-              Most 2026 appraisals still value lab diamonds based on 2023 or 2024 manufacturing costs. Because technology is moving quickly, the price for lab diamonds is dropping by double digits annually. If your appraisal isn&apos;t updated every 12 months, you are insured for an outdated asset. Always select &ldquo;Lab Grown&rdquo; in the calculator to apply current market indices.
+              Most {year} appraisals still value lab diamonds based on 2023 or 2024 manufacturing costs. Because technology is moving quickly, the price for lab diamonds is dropping by double digits annually. If your appraisal isn&apos;t updated every 12 months, you are insured for an outdated asset. Always select &ldquo;Lab Grown&rdquo; in the calculator to apply current market indices.
             </p>
           </section>
 
           {/* Value Classification Table */}
           <section>
-            <h2 className="font-serif text-2xl text-dark mb-4">2026 Asset Worth Reality Map</h2>
+            <h2 className="font-serif text-2xl text-dark mb-4">{year} Asset Worth Reality Map</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">What your appraisal paperwork actually means at each market layer:</p>
             <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full text-sm">

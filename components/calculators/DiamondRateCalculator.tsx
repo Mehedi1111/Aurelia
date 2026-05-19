@@ -78,7 +78,7 @@ export default function DiamondRateCalculator() {
             <label className="block text-[11px] uppercase tracking-widest text-text-subtle font-medium mb-2">Color Grade</label>
             <select value={color} onChange={e => { setColor(e.target.value); setResult(null) }}
               className="w-full border border-border rounded-lg px-3 py-2.5 text-sm text-dark bg-bg focus:outline-none focus:border-accent">
-              {COLORS.map(c => <option key={c}>{c} {c<='F'?'(Colorless)':c<='J'?'(Near Colorless)':'(Faint)'}</option>)}
+              {COLORS.map(c => <option key={c} value={c}>{c} {c<='F'?'(Colorless)':c<='J'?'(Near Colorless)':'(Faint)'}</option>)}
             </select>
           </div>
 

@@ -83,7 +83,7 @@ export default function DiamondFingerCoverageCalculator() {
             <label className="block text-[11px] uppercase tracking-widest text-text-subtle font-medium mb-2">Ring Size (US)</label>
             <select value={ringSize} onChange={e => { setRingSize(e.target.value); setResult(null) }}
               className="w-full border border-border rounded-lg px-3 py-2.5 text-sm text-dark bg-bg focus:outline-none focus:border-accent">
-              {RING_SIZES.map(s => <option key={s}>Size {s}</option>)}
+              {RING_SIZES.map(s => <option key={s} value={s}>Size {s}</option>)}
             </select>
           </div>
 

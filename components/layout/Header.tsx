@@ -208,13 +208,13 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center" aria-label="Main navigation">
+          <nav className="hidden xl:flex items-center" aria-label="Main navigation">
             {MEGA.map(item => (
               <div key={item.label} onMouseEnter={() => openMenu(item.label)} onMouseLeave={closeMenu}>
                 <button
                   onClick={() => setActive(active === item.label ? null : item.label)}
                   aria-expanded={active === item.label}
-                  className={`flex items-center gap-1 px-3.5 py-2 text-[13px] font-medium transition-colors whitespace-nowrap ${
+                  className={`flex items-center gap-1 px-2.5 py-2 text-[13px] font-medium transition-colors whitespace-nowrap ${
                     active === item.label ? 'text-accent' : 'text-text-muted hover:text-dark'
                   }`}
                 >
@@ -226,7 +226,7 @@ export default function Header() {
               </div>
             ))}
             {SIMPLE.map(item => (
-              <Link key={item.label} href={item.href} className="px-3.5 py-2 text-[13px] font-medium text-text-muted hover:text-dark transition-colors whitespace-nowrap">
+              <Link key={item.label} href={item.href} className="px-2.5 py-2 text-[13px] font-medium text-text-muted hover:text-dark transition-colors whitespace-nowrap">
                 {item.label}
               </Link>
             ))}
@@ -246,14 +246,14 @@ export default function Header() {
             <a
               href="https://www.bluenile.com/?a_aid=66fc3592af524&a_cid=55e51e63"
               target="_blank" rel="nofollow sponsored noopener"
-              className="hidden md:inline-flex items-center gap-1.5 bg-dark text-white text-[12px] font-medium px-4 py-2 rounded-lg hover:bg-accent transition-colors"
+              className="hidden xl:inline-flex items-center gap-1.5 bg-dark text-white text-[12px] font-medium px-4 py-2 rounded-lg hover:bg-accent transition-colors"
             >
               Best Deals →
             </a>
             <button
               onClick={() => setMobileOpen(o => !o)}
               aria-label="Toggle menu" aria-expanded={mobileOpen}
-              className="lg:hidden p-2 text-text-muted hover:text-dark transition-colors"
+              className="xl:hidden p-2 text-text-muted hover:text-dark transition-colors"
             >
               {mobileOpen
                 ? <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -352,7 +352,7 @@ export default function Header() {
 
       {/* ── Mobile menu ── */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-bg max-h-[80vh] overflow-y-auto">
+        <div className="xl:hidden border-t border-border bg-bg max-h-[80vh] overflow-y-auto">
           <nav className="max-w-7xl mx-auto px-4 py-3" aria-label="Mobile navigation">
             {MEGA.map(item => (
               <div key={item.label} className="border-b border-border/60">

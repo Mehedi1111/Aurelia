@@ -563,6 +563,38 @@ function makeTablesResponsive(html: string): string {
   return r
 }
 
+// ─── Lasso /go/ redirect links → direct affiliate URLs ───────────────────────
+
+const LASSO_AFFILIATE_MAP: Array<{ pattern: RegExp; url: string }> = [
+  {
+    pattern: /james[\-_]allen/i,
+    url: 'https://www.bluenile.com/james-allen?a_aid=66fc3592af524&a_cid=55e51e63&chan=reddit',
+  },
+  {
+    pattern: /blue[\-_]nile|bluenile/i,
+    url: 'https://www.bluenile.com/?a_aid=66fc3592af524&a_cid=55e51e63&chan=reddit',
+  },
+  {
+    pattern: /amazon/i,
+    url: 'https://amzn.to/4dhPccu',
+  },
+]
+
+function transformLassoLinks(html: string): string {
+  // Match absolute or relative /go/ Lasso redirect hrefs
+  return html.replace(
+    /href="(?:https?:\/\/[^"]*)?\/go\/([^"/?#]+)[^"]*"/gi,
+    (_match, slug: string) => {
+      for (const { pattern, url } of LASSO_AFFILIATE_MAP) {
+        if (pattern.test(slug)) {
+          return `href="${url}"`
+        }
+      }
+      return _match // unknown /go/ link — leave unchanged
+    },
+  )
+}
+
 // ─── Affiliate links ─────────────────────────────────────────────────────────
 
 function cleanAffiliateLinks(html: string): string {
@@ -777,6 +809,7 @@ export function cleanWordPressContent(html: string): string {
   r = makeTablesResponsive(r)
 
   // 8. Links & images
+  r = transformLassoLinks(r)
   r = cleanAffiliateLinks(r)
   r = optimizeImages(r)
   r = addPinterestButtons(r)

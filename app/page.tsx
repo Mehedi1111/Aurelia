@@ -205,12 +205,23 @@ export default async function HomePage() {
         {/* ── Latest guides ── */}
         {posts.length > 0 && (
           <section>
-            <div className="flex items-end justify-between mb-6">
-              <div>
-                <p className="text-accent text-[11px] uppercase tracking-widest font-medium mb-1">Expert Content</p>
-                <h2 className="font-serif text-2xl text-dark">Latest Guides</h2>
+            <div className="mb-5">
+              <p className="text-accent text-[11px] uppercase tracking-widest font-medium mb-1">Expert Content</p>
+              <h2 className="font-serif text-2xl text-dark mb-4">Latest Guides</h2>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/blog/" className="text-xs font-semibold bg-dark text-white px-3.5 py-1.5 rounded-full">
+                  All
+                </Link>
+                {topBlogCats.slice(0, 7).map(c => (
+                  <Link
+                    key={c.slug}
+                    href={`/category/${c.slug}/`}
+                    className="text-xs text-text-muted border border-border bg-surface px-3.5 py-1.5 rounded-full hover:border-accent hover:text-accent transition-colors"
+                  >
+                    {c.name}
+                  </Link>
+                ))}
               </div>
-              <Link href="/blog/" className="text-xs text-accent hover:text-accent-dark font-medium transition-colors">All guides →</Link>
             </div>
             <div className="mb-5">
               <PostCard post={posts[0]} featured />
@@ -226,17 +237,13 @@ export default async function HomePage() {
         {/* ── Shop products ── */}
         {products.length > 0 && (
           <section>
-            <div className="flex items-end justify-between mb-6">
-              <div>
-                <p className="text-accent text-[11px] uppercase tracking-widest font-medium mb-1">Curated Picks</p>
-                <h2 className="font-serif text-2xl text-dark">Shop Fine Jewelry</h2>
-              </div>
-              <Link href="/shop-fine-jewelry/" className="text-xs text-accent hover:text-accent-dark font-medium transition-colors">View all →</Link>
-            </div>
-
-            {/* Product category pill shortcuts */}
-            {productCats.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
+            <div className="mb-5">
+              <p className="text-accent text-[11px] uppercase tracking-widest font-medium mb-1">Curated Picks</p>
+              <h2 className="font-serif text-2xl text-dark mb-4">Shop Fine Jewelry</h2>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/shop-fine-jewelry/" className="text-xs font-semibold bg-dark text-white px-3.5 py-1.5 rounded-full">
+                  All Jewelry
+                </Link>
                 {productCats.map(c => (
                   <Link
                     key={c.slug}
@@ -247,7 +254,7 @@ export default async function HomePage() {
                   </Link>
                 ))}
               </div>
-            )}
+            </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
               {products.map(p => (

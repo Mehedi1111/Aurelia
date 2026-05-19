@@ -4,15 +4,18 @@ import { getAllCategorySlugs, getCategoryBySlug } from '@/lib/graphql/queries/ca
 import { getPostsByCategory } from '@/lib/graphql/queries/posts'
 import PostCard from '@/components/blog/PostCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import Pagination from '@/components/ui/Pagination'
+
+const PER_PAGE = 12
 
 interface CategoryPageProps {
   params: Promise<{ slug: string[] }>
+  searchParams: Promise<{ page?: string }>
 }
 
 export async function generateStaticParams() {
   const categories = await getAllCategorySlugs()
   return categories.map(({ uri }) => ({
-    // Convert /category/diamond/diamond-clarity-guide/ → ['diamond', 'diamond-clarity-guide']
     slug: uri.replace(/^\/category\//, '').replace(/\/$/, '').split('/'),
   }))
 }
@@ -34,14 +37,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   }
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { slug } = await params
+export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
+  const [{ slug }, { page: pageParam }] = await Promise.all([params, searchParams])
   const categorySlug = slug[slug.length - 1]
-  const category = await getCategoryBySlug(categorySlug)
+
+  const [category, postsData] = await Promise.all([
+    getCategoryBySlug(categorySlug),
+    getPostsByCategory(categorySlug, 200),
+  ])
   if (!category) notFound()
 
-  const postsData = await getPostsByCategory(categorySlug, 24)
-  const posts = postsData.posts.nodes
+  const allPosts = postsData.posts.nodes
+  const page = Math.max(1, parseInt(pageParam || '1', 10))
+  const totalPages = Math.ceil(allPosts.length / PER_PAGE)
+  const currentPage = Math.min(page, Math.max(1, totalPages))
+  const posts = allPosts.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+  const basePath = `/category/${slug.join('/')}`
 
   const ancestors = category.ancestors?.nodes || []
   const breadcrumbs = [
@@ -60,25 +71,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-dark text-center mb-4 text-balance leading-tight">
           {category.name}
         </h1>
+        {totalPages > 1 && (
+          <p className="text-center text-xs text-text-subtle mt-2">
+            Page {currentPage} of {totalPages}
+          </p>
+        )}
       </header>
 
       {posts.length > 0 ? (
         <>
-          {/* Featured first post */}
-          {posts.length > 0 && (
+          {currentPage === 1 && (
             <div className="mb-8">
               <PostCard post={posts[0]} featured />
             </div>
           )}
 
-          {/* Grid of remaining posts */}
-          {posts.length > 1 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.slice(1).map(post => (
-                <PostCard key={post.slug} post={post} />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {(currentPage === 1 ? posts.slice(1) : posts).map(post => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={basePath} />
         </>
       ) : (
         <div className="text-center py-20 text-text-muted">
@@ -90,4 +104,4 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   )
 }
 
-export const revalidate = 86400
+export const revalidate = 3600

@@ -13,35 +13,41 @@ import Pagination from '@/components/ui/Pagination'
 const PER_PAGE = 24
 
 interface Props {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string[] }>
   searchParams: Promise<{ page?: string }>
 }
 
 export async function generateStaticParams() {
   const cats = await getAllProductCategories()
-  return cats.map(c => ({ slug: c.slug }))
+  // Only generate paths for nested categories (those with a parent)
+  return cats
+    .filter(c => c.parent?.node?.slug)
+    .map(c => ({ slug: [c.parent!.node.slug, c.slug] }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const cat = await getProductCategoryBySlug(slug)
+  const categorySlug = slug[slug.length - 1]
+  const cat = await getProductCategoryBySlug(categorySlug)
   if (!cat) return {}
   const desc = cat.description
     ? cat.description.replace(/<[^>]+>/g, '').trim().slice(0, 160)
-    : `Shop ${cat.name} — hand-selected fine jewelry pieces from trusted retailers.`
+    : `Shop ${cat.name} — hand-selected fine jewelry from trusted retailers.`
   return {
     title: `${cat.name} Jewelry — Moissanite by Aurelia`,
     description: desc,
-    alternates: { canonical: `https://moissanitebyaurelia.com/product-category/${slug}/` },
+    alternates: { canonical: `https://moissanitebyaurelia.com/product-category/${slug.join('/')}/` },
   }
 }
 
-export default async function ProductCategoryPage({ params, searchParams }: Props) {
+export default async function NestedProductCategoryPage({ params, searchParams }: Props) {
   const [{ slug }, { page: pageParam }] = await Promise.all([params, searchParams])
+  const categorySlug = slug[slug.length - 1]
+
   const [cat, allCats, productsData] = await Promise.all([
-    getProductCategoryBySlug(slug),
+    getProductCategoryBySlug(categorySlug),
     getAllProductCategories(),
-    getProductsByCategory(slug, 200),
+    getProductsByCategory(categorySlug, 200),
   ])
   if (!cat) notFound()
 
@@ -50,6 +56,7 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
   const totalPages = Math.ceil(allProducts.length / PER_PAGE)
   const currentPage = Math.min(page, Math.max(1, totalPages))
   const products = allProducts.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+  const basePath = `/product-category/${slug.join('/')}`
 
   const breadcrumbs = [
     { label: 'Shop', href: '/shop-fine-jewelry/' },
@@ -59,6 +66,7 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
     { label: cat.name },
   ]
 
+  // Top-level categories only for the filter pills
   const topCats = allCats.filter(c => !c.parent?.node?.slug)
 
   return (
@@ -90,7 +98,7 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
               key={c.slug}
               href={`/product-category/${c.slug}/`}
               className={`text-xs border px-4 py-2 rounded-full transition-colors ${
-                c.slug === slug
+                c.slug === (cat.parent?.node?.slug ?? categorySlug)
                   ? 'border-accent text-accent bg-accent-light font-medium'
                   : 'text-text-muted border-border bg-bg hover:border-accent hover:text-accent'
               }`}
@@ -108,7 +116,7 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/product-category/${slug}`} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={basePath} />
         </>
       ) : (
         <div className="text-center py-20 text-text-muted">

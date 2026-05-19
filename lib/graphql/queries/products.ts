@@ -94,8 +94,8 @@ export async function getProducts(first = 12, after?: string): Promise<WPProduct
 export async function getAllProductCategories(): Promise<WPProductCategory[]> {
   const query = `
     query AllProductCategories {
-      productCategories(first: 100, where: { hideEmpty: true }) {
-        nodes { name slug count description }
+      productCategories(first: 200, where: { hideEmpty: true }) {
+        nodes { name slug count description parent { node { name slug } } }
       }
     }
   `
@@ -106,7 +106,10 @@ export async function getAllProductCategories(): Promise<WPProductCategory[]> {
 export async function getProductCategoryBySlug(slug: string): Promise<WPProductCategory | null> {
   const query = `
     query ProductCategoryBySlug($slug: ID!) {
-      productCategory(id: $slug, idType: SLUG) { name slug count description }
+      productCategory(id: $slug, idType: SLUG) {
+        name slug count description
+        parent { node { name slug } }
+      }
     }
   `
   const data = await fetchWP<{ productCategory: WPProductCategory | null }>(query, { slug })

@@ -74,6 +74,7 @@ export interface WPProductCategory {
   slug: string
   count: number
   description?: string
+  parent?: { node: { name: string; slug: string } } | null
 }
 
 export interface WPProductAttribute {

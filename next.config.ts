@@ -8,26 +8,44 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
+    // WordPress backend URL — add a DNS A record for cms.moissanitebyaurelia.com
+    // pointing to 156.67.73.18 (Hostinger IP) so this works after domain switches to Vercel
+    const WP = 'https://moissanitebyaurelia.com'
+
+    // WordPress Pages (not posts) that need to be proxied — these have no Next.js route
+    const WP_PAGES = [
+      'diamond-finger-coverage-calculator',
+      'lab-diamond-vs-moissanite-price-calculator',
+      'moissanite-price-calculator',
+      'diamond-rate-calculator',
+      'diamond-appraisal-calculator',
+      'diamond-resale-price-calculator',
+      'moissanite-vs-diamond-price-calculator',
+      'jewelry-coupons',
+      'blue-nile-promo-code',
+      'james-allen-promotional-code',
+      'best-jewelry-retailer-quiz',
+      'faq',
+      'engagement-ring-inspiration-gallery',
+    ]
+
     return [
       // Proxy Lasso affiliate redirect links to WordPress backend
-      {
-        source: '/go/:path*',
-        destination: 'https://cms.moissanitebyaurelia.com/go/:path*',
-      },
-      // Keep WordPress admin accessible
-      {
-        source: '/wp-admin/:path*',
-        destination: 'https://cms.moissanitebyaurelia.com/wp-admin/:path*',
-      },
-      {
-        source: '/wp-login.php',
-        destination: 'https://cms.moissanitebyaurelia.com/wp-login.php',
-      },
-      // Keep WordPress REST API accessible for any plugins that need it
-      {
-        source: '/wp-json/:path*',
-        destination: 'https://cms.moissanitebyaurelia.com/wp-json/:path*',
-      },
+      { source: '/go/:path*', destination: `${WP}/go/:path*` },
+      // Keep WordPress admin and REST API accessible
+      { source: '/wp-admin/:path*', destination: `${WP}/wp-admin/:path*` },
+      { source: '/wp-login.php', destination: `${WP}/wp-login.php` },
+      { source: '/wp-json/:path*', destination: `${WP}/wp-json/:path*` },
+      // WordPress Pages without Next.js routes — proxy through to WordPress
+      ...WP_PAGES.map(slug => ({
+        source: `/${slug}/`,
+        destination: `${WP}/${slug}/`,
+      })),
+      // Also match without trailing slash
+      ...WP_PAGES.map(slug => ({
+        source: `/${slug}`,
+        destination: `${WP}/${slug}/`,
+      })),
     ]
   },
 

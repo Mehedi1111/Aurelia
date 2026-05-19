@@ -4,6 +4,7 @@ import { getPosts } from '@/lib/graphql/queries/posts'
 import { getAllCategories } from '@/lib/graphql/queries/categories'
 import PostCard from '@/components/blog/PostCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
+import Pagination from '@/components/ui/Pagination'
 
 export const metadata: Metadata = {
   title: 'Jewelry Guides & Articles — Moissanite by Aurelia',
@@ -11,17 +12,29 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://moissanitebyaurelia.com/blog/' },
 }
 
-export default async function BlogPage() {
+const PER_PAGE = 12
+
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}) {
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, parseInt(pageParam || '1', 10))
+
   const [data, allCategories] = await Promise.all([
-    getPosts(48),
+    getPosts(500),
     getAllCategories(),
   ])
-  const posts = data.posts.nodes
+  const allPosts = data.posts.nodes
 
-  // Show only top-level categories (no ancestors) that have posts
   const topCategories = allCategories
     .filter(c => !c.ancestors?.nodes?.length && (c.count ?? 0) > 0)
     .slice(0, 12)
+
+  const totalPages = Math.ceil(allPosts.length / PER_PAGE)
+  const currentPage = Math.min(page, Math.max(1, totalPages))
+  const posts = allPosts.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
 
   const breadcrumbs = [{ label: 'Blog' }]
 
@@ -40,7 +53,6 @@ export default async function BlogPage() {
           Expert advice on moissanite, diamonds, and gemstones — from buying guides to honest reviews.
         </p>
 
-        {/* Blog category filter pills */}
         {topCategories.length > 0 && (
           <div className="flex flex-wrap justify-center gap-2 mt-6">
             <span className="text-xs border border-accent text-accent bg-accent-light font-medium px-4 py-2 rounded-full">
@@ -57,16 +69,22 @@ export default async function BlogPage() {
             ))}
           </div>
         )}
+
+        {totalPages > 1 && (
+          <p className="text-center text-xs text-text-subtle mt-4">
+            Page {currentPage} of {totalPages} — {allPosts.length} articles
+          </p>
+        )}
       </header>
 
-      {posts.length > 0 && (
+      {posts.length > 0 && currentPage === 1 && (
         <div className="mb-10">
           <PostCard post={posts[0]} featured />
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.slice(1).map(post => (
+        {(currentPage === 1 ? posts.slice(1) : posts).map(post => (
           <PostCard key={post.slug} post={post} />
         ))}
       </div>
@@ -77,6 +95,8 @@ export default async function BlogPage() {
           <p className="text-sm">Check back soon for guides and reviews.</p>
         </div>
       )}
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
     </div>
   )
 }

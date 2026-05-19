@@ -76,6 +76,25 @@ export default function MoissanitePriceCalculatorPage() {
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
           <section>
+            <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Moissanite Price Calculator</h2>
+            <div className="space-y-4">
+              {[
+                { step: '1', title: 'Select Shape & Set Carat Weight', body: 'Choose your desired shape (Round, Oval, Cushion, Pear, Emerald, Radiant, Princess, or Marquise) and use the carat slider to set the weight. Fancy shapes like oval and pear are typically 10–20% less expensive than round for the same carat weight, and often appear larger face-up.' },
+                { step: '2', title: 'Choose Color Grade', body: 'Select DEF (colorless) or GHI (near-colorless). For white gold or platinum settings, DEF is strongly recommended — it faces up pure white with no contrast against the metal. For yellow or rose gold, GHI moissanite blends beautifully at a lower price. The price difference between DEF and GHI is typically 15–25%.' },
+                { step: '3', title: 'Compare Retailers & Click Through', body: 'Click "Compare Prices" to see side-by-side pricing from Charles & Colvard, James Allen, and Amazon. Use the affiliate links to verify live pricing and check for active promotions — C&C and JA regularly run 10–25% discount events. Amazon pricing changes daily, so the estimate is a benchmark, not a guarantee.' },
+              ].map(item => (
+                <div key={item.step} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-dark text-white text-sm font-semibold flex items-center justify-center shrink-0 mt-0.5">{item.step}</div>
+                  <div>
+                    <p className="font-medium text-dark text-sm mb-1">{item.title}</p>
+                    <p className="text-text-muted text-sm leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Moissanite Pricing Explained: 3 Tiers You Need to Know</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
               Moissanite pricing is not a single market — it splits into three distinct tiers based on brand quality, certification, and sourcing. Knowing the tiers prevents you from overpaying at brand level or unknowingly buying low-grade stones at discount prices.

@@ -9,7 +9,7 @@ import ProductCard from '@/components/products/ProductCard'
 import BrowseBar from '@/components/layout/BrowseBar'
 
 export const metadata: Metadata = {
-  title: 'Moissanite by Aurelia — Diamond, Gemstone & Moissanite Jewelry Guides',
+  title: { absolute: 'Moissanite by Aurelia — Diamond, Gemstone & Moissanite Jewelry Guides' },
   description: 'Expert guides on moissanite, diamonds, and gemstones. Honest reviews and affiliate buying advice by Mehedi Hasan, cited in People, Us Weekly & Page Six.',
   alternates: { canonical: 'https://moissanitebyaurelia.com' },
 }

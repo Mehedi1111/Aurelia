@@ -78,6 +78,25 @@ export default function MoissaniteDiamondPriceCalculatorPage() {
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
           <section>
+            <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Moissanite vs Diamond Calculator</h2>
+            <div className="space-y-4">
+              {[
+                { step: '1', title: 'Select Shape & Carat Weight', body: 'Choose the diamond shape you\'re considering and use the carat slider to set the weight. The calculator applies real face-up size differences between shapes — so a 1.50ct oval moissanite and a 1.50ct round moissanite will show different visual size estimates alongside their price gap.' },
+                { step: '2', title: 'Choose Color & Clarity Grades', body: 'Select the color (D–J) and clarity (FL–I1) grades for your comparison. For a fair apples-to-apples comparison, use the same grades for both stones. The calculator applies independent pricing models for natural diamonds and moissanite — the savings percentage updates in real time.' },
+                { step: '3', title: 'Compare Prices & Click Through to Retailers', body: 'Click "Compare Prices" to see the side-by-side result: moissanite price, natural diamond price, and total savings (in dollars and percentage). Use the retailer links to verify live pricing at James Allen or Blue Nile before making a final decision.' },
+              ].map(item => (
+                <div key={item.step} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-dark text-white text-sm font-semibold flex items-center justify-center shrink-0 mt-0.5">{item.step}</div>
+                  <div>
+                    <p className="font-medium text-dark text-sm mb-1">{item.title}</p>
+                    <p className="text-text-muted text-sm leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Moissanite: The Ethical &amp; Brilliant Alternative</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-3">
               In 2026, moissanite is no longer seen as a diamond substitute but as a superior choice for buyers prioritizing fire, sustainability, and financial intelligence. At 9.25 on the Mohs scale, it&apos;s nearly as hard as a diamond (10) but offers a higher refractive index — producing more rainbow brilliance per facet.

@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? cat.description.replace(/<[^>]+>/g, '').trim().slice(0, 160)
     : `Shop ${cat.name} — hand-selected fine jewelry from trusted retailers.`
   return {
-    title: `${cat.name} Jewelry — Moissanite by Aurelia`,
+    title: `${cat.name} Jewelry`,
     description: desc,
     alternates: { canonical: `https://moissanitebyaurelia.com/product-category/${slug.join('/')}/` },
   }

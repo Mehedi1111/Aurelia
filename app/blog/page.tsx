@@ -7,7 +7,7 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Pagination from '@/components/ui/Pagination'
 
 export const metadata: Metadata = {
-  title: 'Jewelry Guides & Articles — Moissanite by Aurelia',
+  title: 'Jewelry Guides & Articles',
   description: 'Expert moissanite, diamond, and gemstone guides. Buying advice, comparisons, and reviews by Mehedi Hasan.',
   alternates: { canonical: 'https://moissanitebyaurelia.com/blog/' },
 }

@@ -76,6 +76,25 @@ export default function DiamondResalePriceCalculatorPage() {
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
           <section>
+            <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Diamond Resale Calculator</h2>
+            <div className="space-y-4">
+              {[
+                { step: '1', title: 'Select Stone Type & Shape', body: 'Choose between natural diamond, lab-grown diamond, or moissanite — each has a very different resale market. Then select the shape. Round brilliants have the strongest secondary market demand; fancy shapes are harder to sell but round brilliants command higher per-carat resale.' },
+                { step: '2', title: 'Enter Carat, Color & Clarity', body: 'Input the carat weight and select color and clarity grades from your GIA certificate. If you don\'t have a certificate, use conservative estimates — unverified stones always receive lower offers. The calculator assumes the stone is GIA-certified for the base calculation.' },
+                { step: '3', title: 'Choose Condition & Get Your Estimate', body: 'Select the stone\'s current condition (Excellent, Very Good, Good, or Fair) and click "Calculate Resale Value." You\'ll see both a direct cash offer estimate and a trade-in credit estimate — plus recommended selling channels ranked by return percentage.' },
+              ].map(item => (
+                <div key={item.step} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-dark text-white text-sm font-semibold flex items-center justify-center shrink-0 mt-0.5">{item.step}</div>
+                  <div>
+                    <p className="font-medium text-dark text-sm mb-1">{item.title}</p>
+                    <p className="text-text-muted text-sm leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Why Your Diamond&apos;s Value Changed</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-3">
               Diamonds marketed as lifetime assets face significant depreciation in secondary markets. The gap between retail replacement value and liquidation value has expanded dramatically by 2026. The real resale market must subtract three costs that are baked into your original purchase price and are completely unrecoverable:

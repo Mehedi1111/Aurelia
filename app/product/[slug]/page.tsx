@@ -23,8 +23,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const product = await getProductBySlug(slug)
   if (!product) return {}
   const seo = product.seo
+  const stripBrand = (t: string) => t.replace(/\s*[|—]\s*Moissanite by Aurelia\s*$/i, '').trim()
   return {
-    title: seo.title || product.name,
+    title: stripBrand(seo.title || product.name),
     description: seo.metaDesc || '',
     alternates: { canonical: seo.canonical || `https://moissanitebyaurelia.com/product/${slug}/` },
     openGraph: {

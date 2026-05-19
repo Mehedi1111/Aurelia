@@ -5,7 +5,7 @@ import ProductCard from '@/components/products/ProductCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Shop Fine Jewelry — Moissanite by Aurelia',
+  title: 'Shop Fine Jewelry',
   description: 'Curated fine jewelry picks — moissanite, diamond, and gemstone pieces from trusted retailers. Hand-selected by Mehedi Hasan.',
   alternates: { canonical: 'https://moissanitebyaurelia.com/shop-fine-jewelry/' },
 }

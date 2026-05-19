@@ -76,6 +76,25 @@ export default function DiamondFingerCoverageCalculatorPage() {
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
           <section>
+            <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Finger Coverage Calculator</h2>
+            <div className="space-y-4">
+              {[
+                { step: '1', title: 'Enter Your Ring Size', body: 'Select your US ring size from the dropdown. If you\'re between sizes, use the larger size — finger coverage calculations round up slightly for loose-fitting rings. If you don\'t know your ring size, most jewelers will measure for free, or use a ring sizer printout for an at-home estimate.' },
+                { step: '2', title: 'Choose Diamond Shape & Carat Weight', body: 'Select the diamond shape you\'re considering and enter the carat weight. The calculator uses actual face-up millimeter dimensions for each shape — not just weight — because a 1ct oval and 1ct round have very different face-up footprints on your finger.' },
+                { step: '3', title: 'Read Your Coverage Result', body: 'Click "Calculate Coverage" to see the exact coverage percentage. The result shows where you fall on the coverage spectrum: 30–35% (dainty), 35–50% (modern sweet spot), or 50–65% (statement look). Use this to compare multiple shapes and carat sizes before ordering.' },
+              ].map(item => (
+                <div key={item.step} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-dark text-white text-sm font-semibold flex items-center justify-center shrink-0 mt-0.5">{item.step}</div>
+                  <div>
+                    <p className="font-medium text-dark text-sm mb-1">{item.title}</p>
+                    <p className="text-text-muted text-sm leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Understanding Finger Coverage Percentages</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
               Purchasing an engagement ring online presents a challenge: photos are misleading. A stone photographed on a model&apos;s size 5 finger will look completely different on your size 7 hand. Finger Coverage solves this by calculating the exact ratio of stone face-up width to finger width.

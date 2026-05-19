@@ -78,6 +78,25 @@ export default function PearlValueCalculatorPage() {
         <article className="max-w-3xl mx-auto mt-16 space-y-10">
 
           <section>
+            <h2 className="font-serif text-2xl text-dark mb-4">How to Use the Pearl Value Calculator</h2>
+            <div className="space-y-4">
+              {[
+                { step: '1', title: 'Select Pearl Type & Origin', body: 'Choose the pearl type: freshwater, Akoya, South Sea, or Tahitian. Each has a completely different price baseline — a 9mm South Sea pearl is worth 10–20x more than a 9mm freshwater pearl of equivalent quality. Select the origin (cultured or natural) — natural (unfarmed) pearls are exponentially rarer and more valuable.' },
+                { step: '2', title: 'Enter Size, Luster & Surface Quality', body: 'Input the pearl diameter in millimeters — use calipers for accuracy if you have a loose pearl. Then select the luster grade (Excellent shows mirror-sharp reflections; Poor appears chalky) and surface quality (Clean to Heavily Blemished). Luster is the single biggest value driver after size.' },
+                { step: '3', title: 'Choose Shape & Get Your Estimate', body: 'Select the pearl shape (Round, Near Round, Oval, Button, or Baroque) and click "Calculate Pearl Value." The result shows an estimated retail range and a realistic resale estimate. Use this as a benchmark when buying from a jeweler or estate sale, or before insuring a pearl strand.' },
+              ].map(item => (
+                <div key={item.step} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-dark text-white text-sm font-semibold flex items-center justify-center shrink-0 mt-0.5">{item.step}</div>
+                  <div>
+                    <p className="font-medium text-dark text-sm mb-1">{item.title}</p>
+                    <p className="text-text-muted text-sm leading-relaxed">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl text-dark mb-3">Understanding Pearl Quality & Value</h2>
             <p className="text-text-muted text-sm leading-relaxed mb-4">
               Pearl pricing is more complex than diamonds — there is no universally standardized grading system equivalent to GIA. Instead, pearl value is the product of five independent quality factors. Understanding each factor lets you buy and sell with confidence in a market where inflated retail markups are common.

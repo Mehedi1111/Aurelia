@@ -17,11 +17,21 @@ const COLS = {
     { label: 'Ritani Review',       href: '/category/diamond-review/' },
     { label: 'All Reviews',         href: '/category/diamond-review/' },
   ],
+  'Calculators': [
+    { label: 'Diamond Appraisal',    href: '/diamond-appraisal-calculator/' },
+    { label: 'Diamond Rate',         href: '/diamond-rate-calculator/' },
+    { label: 'Diamond Resale',       href: '/diamond-resale-price-calculator/' },
+    { label: 'Finger Coverage',      href: '/diamond-finger-coverage-calculator/' },
+    { label: 'Moissanite vs Diamond',href: '/moissanite-vs-diamond-price-calculator/' },
+    { label: 'Moissanite Price',     href: '/moissanite-price-calculator/' },
+    { label: 'Pearl Value',          href: '/pearl-value-calculator/' },
+  ],
   'Tools': [
     { label: 'Diamond IQ Quiz',     href: '/jewelry-personality-quiz/' },
-    { label: 'Ask Aurelia',         href: '/category/ask-aurelia/' },
+    { label: 'Jewelry Coupons',     href: '/jewelry-coupons/' },
+    { label: 'Blue Nile Promo',     href: '/blue-nile-promo-code/' },
+    { label: 'James Allen Deals',   href: '/james-allen-promotional-code/' },
     { label: 'Shop Fine Jewelry',   href: '/shop-fine-jewelry/' },
-    { label: 'Best Deals',          href: '/category/diamond-buying-guide/' },
   ],
   'About': [
     { label: 'About Mehedi',         href: '/about-mehedi/' },
@@ -50,10 +60,10 @@ export default function Footer() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
 
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="inline-block mb-4" aria-label="Moissanite by Aurelia — Home">
               <Image
                 src="https://moissanitebyaurelia.com/wp-content/uploads/2024/08/AURELIA-horizontal.png.webp"

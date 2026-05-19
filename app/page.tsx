@@ -80,9 +80,12 @@ export default async function HomePage() {
       .map(c => ({ label: c.name, href: `/category/${c.slug}/` })),
   ]
 
+  // Top-level product categories only (no parent)
+  const topProductCats = productCats.filter(c => !c.parent?.node?.slug)
+
   const shopItems = [
     { label: 'All Jewelry', href: '/shop-fine-jewelry/' },
-    ...productCats.map(c => ({ label: c.name, href: `/product-category/${c.slug}/` })),
+    ...topProductCats.map(c => ({ label: c.name, href: `/product-category/${c.slug}/` })),
   ]
 
   return (
@@ -244,7 +247,7 @@ export default async function HomePage() {
                 <Link href="/shop-fine-jewelry/" className="text-xs font-semibold bg-dark text-white px-3.5 py-1.5 rounded-full">
                   All Jewelry
                 </Link>
-                {productCats.map(c => (
+                {topProductCats.slice(0, 6).map(c => (
                   <Link
                     key={c.slug}
                     href={`/product-category/${c.slug}/`}

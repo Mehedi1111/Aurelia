@@ -14,13 +14,6 @@ const nextConfig: NextConfig = {
 
     // WordPress Pages (not posts) that need to be proxied — these have no Next.js route
     const WP_PAGES = [
-      'diamond-finger-coverage-calculator',
-      'lab-diamond-vs-moissanite-price-calculator',
-      'moissanite-price-calculator',
-      'diamond-rate-calculator',
-      'diamond-appraisal-calculator',
-      'diamond-resale-price-calculator',
-      'moissanite-vs-diamond-price-calculator',
       'jewelry-coupons',
       'blue-nile-promo-code',
       'james-allen-promotional-code',

@@ -95,6 +95,37 @@ const MEGA: Array<{
     ],
   },
   {
+    label: 'Calculators',
+    href: '/diamond-appraisal-calculator/',
+    columns: [
+      {
+        heading: 'Diamond Calculators',
+        links: [
+          { label: 'Diamond Appraisal Calculator',      href: '/diamond-appraisal-calculator/',       desc: 'Market, insurance & resale value' },
+          { label: 'Diamond Rate Calculator',           href: '/diamond-rate-calculator/',            desc: 'Fair market price estimate' },
+          { label: 'Diamond Resale Calculator',         href: '/diamond-resale-price-calculator/',    desc: 'Cash offer vs trade-in credit' },
+          { label: 'Diamond Finger Coverage',           href: '/diamond-finger-coverage-calculator/', desc: 'Coverage % by shape & ring size' },
+        ],
+      },
+      {
+        heading: 'Moissanite & Pearl',
+        links: [
+          { label: 'Moissanite vs Diamond Calculator',  href: '/moissanite-vs-diamond-price-calculator/', desc: 'Side-by-side price comparison' },
+          { label: 'Moissanite Price Calculator',       href: '/moissanite-price-calculator/',            desc: 'C&C, James Allen & Amazon' },
+          { label: 'Pearl Value Calculator',            href: '/pearl-value-calculator/',                 desc: 'Freshwater, Akoya, South Sea' },
+        ],
+      },
+      {
+        heading: 'Coupons & Deals',
+        links: [
+          { label: 'All Jewelry Coupons',               href: '/jewelry-coupons/',               desc: 'Best active promo codes' },
+          { label: 'Blue Nile Promo Code',              href: '/blue-nile-promo-code/',          desc: 'Up to 70% off — verified' },
+          { label: 'James Allen Promo Code',            href: '/james-allen-promotional-code/',  desc: 'Latest deals & discounts' },
+        ],
+      },
+    ],
+  },
+  {
     label: 'Reviews',
     href: '/category/diamond-review/',
     columns: [
@@ -124,7 +155,6 @@ const MEGA: Array<{
 const SIMPLE = [
   { label: 'Shop', href: '/shop-fine-jewelry/' },
   { label: 'Blog', href: '/blog/' },
-  { label: 'Quiz', href: '/jewelry-personality-quiz/' },
 ]
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -365,11 +395,10 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/search"
-              onClick={() => setMobileOpen(false)}
-              className="block py-3.5 text-sm font-medium text-dark border-b border-border/60"
-            >
+            <Link href="/jewelry-personality-quiz/" onClick={() => setMobileOpen(false)} className="block py-3.5 text-sm font-medium text-dark border-b border-border/60">
+              Quiz
+            </Link>
+            <Link href="/search" onClick={() => setMobileOpen(false)} className="block py-3.5 text-sm font-medium text-dark border-b border-border/60">
               Search
             </Link>
             <div className="py-4">

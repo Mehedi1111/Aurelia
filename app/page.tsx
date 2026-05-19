@@ -145,7 +145,9 @@ export default async function HomePage() {
                     rel="nofollow sponsored noopener noreferrer"
                     className="flex items-center gap-3 bg-dark rounded-xl p-3.5 hover:bg-accent transition-colors group"
                   >
-                    <div className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center shrink-0 text-lg">💎</div>
+                    <div className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
+                      <svg className="w-4 h-4 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+                    </div>
                     <div className="min-w-0">
                       <p className="text-white text-xs font-semibold">Blue Nile — Vault Sale</p>
                       <p className="text-white/60 text-[11px] mt-0.5">Up to 70% off — limited time</p>
@@ -198,7 +200,7 @@ export default async function HomePage() {
                 <h3 className="font-serif text-base text-dark group-hover:text-accent transition-colors mb-1.5">{p.name}</h3>
                 <p className="text-xs text-text-muted leading-relaxed flex-1 mb-3">{p.desc}</p>
                 <p className="text-[11px] text-accent font-medium border-t border-border pt-3">
-                  🔥 {p.deal}
+                  {p.deal}
                 </p>
               </a>
             ))}

@@ -49,10 +49,10 @@ function discountPercent(regular: string | null | undefined, sale: string | null
 }
 
 const TRUST_BADGES = [
-  { icon: '🚚', label: 'Free Shipping' },
-  { icon: '🔒', label: 'Secure Checkout' },
-  { icon: '↩️', label: '30-Day Returns' },
-  { icon: '⭐', label: '1-Year Warranty' },
+  { label: 'Free Shipping' },
+  { label: 'Secure Checkout' },
+  { label: '30-Day Returns' },
+  { label: '1-Year Warranty' },
 ]
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -121,8 +121,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-border text-6xl">💍</span>
+                <div className="w-full h-full flex items-center justify-center bg-surface">
+                  <svg className="w-16 h-16 text-border" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
                 </div>
               )}
               {discount !== null && (
@@ -234,7 +234,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="grid grid-cols-2 gap-2 mb-8">
               {TRUST_BADGES.map(badge => (
                 <div key={badge.label} className="flex items-center gap-2 bg-surface rounded-lg px-3 py-2.5">
-                  <span className="text-base">{badge.icon}</span>
                   <span className="text-xs font-medium text-text-muted">{badge.label}</span>
                 </div>
               ))}

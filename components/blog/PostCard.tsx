@@ -75,7 +75,9 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl text-border/40">💎</div>
+          <div className="w-full h-full flex items-center justify-center bg-surface">
+            <svg className="w-10 h-10 text-border" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          </div>
         )}
         {category && (
           <Link

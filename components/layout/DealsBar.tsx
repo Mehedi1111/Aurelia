@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from 'react'
 
 const DEALS = [
   {
-    emoji: '🌸',
     tag: "Mother's Day",
     text: "Up To 30% Off select fine jewelry",
     retailer: "Blue Nile",
@@ -12,7 +11,6 @@ const DEALS = [
     cta: "Shop Sale",
   },
   {
-    emoji: '💎',
     tag: "New Collection",
     text: "Shop the James Allen Collection at Blue Nile",
     retailer: "Blue Nile",
@@ -20,7 +18,6 @@ const DEALS = [
     cta: "Explore Now",
   },
   {
-    emoji: '🔥',
     tag: "Vault Sale",
     text: "Clear The Vault — Up to 70% OFF",
     retailer: "Blue Nile",
@@ -28,7 +25,6 @@ const DEALS = [
     cta: "Shop 70% Off",
   },
   {
-    emoji: '⚡',
     tag: "Flash Sale",
     text: "Up to 40% OFF sitewide",
     retailer: "Rare Carat",
@@ -36,7 +32,6 @@ const DEALS = [
     cta: "Shop Now",
   },
   {
-    emoji: '✨',
     tag: "Exclusive",
     text: "Up to 60% OFF select fine jewelry",
     retailer: "Ritani",
@@ -87,8 +82,6 @@ export default function DealsBar() {
           className="flex items-center gap-2 text-center transition-opacity duration-200"
           style={{ opacity: visible ? 1 : 0 }}
         >
-          <span className="text-sm leading-none">{deal.emoji}</span>
-
           <span className="text-[#d19b8a] text-[11px] font-medium uppercase tracking-widest hidden sm:inline">
             {deal.tag}:
           </span>

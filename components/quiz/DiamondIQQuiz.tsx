@@ -109,7 +109,7 @@ export default function DiamondIQQuiz() {
                           ? 'bg-cyan-400 text-black'
                           : 'bg-yellow-400 text-black'
                       }`}>
-                        {diamond.isLab ? '🔬 Lab-Grown' : '⛏️ Natural'}
+                        {diamond.isLab ? 'Lab-Grown' : 'Natural'}
                       </span>
                     </div>
                   )}
@@ -158,7 +158,7 @@ export default function DiamondIQQuiz() {
               {/* Result */}
               <div className="bg-white/5 rounded-xl px-5 py-4">
                 <p className={`font-serif text-lg mb-1 ${wasCorrect ? 'text-yellow-400' : 'text-cyan-400'}`}>
-                  {wasCorrect ? '⛏️ You chose Natural!' : '🔬 You chose Lab-Grown!'}
+                  {wasCorrect ? 'You chose Natural!' : 'You chose Lab-Grown!'}
                 </p>
                 <p className="text-white/60 text-xs leading-relaxed">
                   Identical in every way — D color, VVS1 clarity, ideal cut. Yet one costs{' '}

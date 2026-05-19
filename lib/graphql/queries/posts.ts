@@ -105,6 +105,34 @@ export async function getPostsByCategory(categorySlug: string, first = 12, after
   return data ?? EMPTY_POSTS
 }
 
+// Fetches ALL posts by looping through WPGraphQL cursor pages (100 per request max).
+export async function getAllBlogPosts(): Promise<WPPostCard[]> {
+  const all: WPPostCard[] = []
+  let after: string | undefined
+  let safety = 0
+  do {
+    const page = await getPosts(100, after)
+    all.push(...page.posts.nodes)
+    if (!page.posts.pageInfo.hasNextPage) break
+    after = page.posts.pageInfo.endCursor || undefined
+  } while (++safety < 20)
+  return all
+}
+
+// Fetches ALL posts in a category by looping through cursor pages.
+export async function getAllPostsByCategory(categorySlug: string): Promise<WPPostCard[]> {
+  const all: WPPostCard[] = []
+  let after: string | undefined
+  let safety = 0
+  do {
+    const page = await getPostsByCategory(categorySlug, 100, after)
+    all.push(...page.posts.nodes)
+    if (!page.posts.pageInfo.hasNextPage) break
+    after = page.posts.pageInfo.endCursor || undefined
+  } while (++safety < 20)
+  return all
+}
+
 export async function getRelatedPosts(categorySlug: string, excludeSlug: string, first = 4): Promise<WPPostCard[]> {
   const query = `
     query RelatedPosts($categorySlug: String!, $first: Int!) {

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getAllCategorySlugs, getCategoryBySlug } from '@/lib/graphql/queries/categories'
-import { getPostsByCategory } from '@/lib/graphql/queries/posts'
+import { getAllPostsByCategory } from '@/lib/graphql/queries/posts'
 import PostCard from '@/components/blog/PostCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Pagination from '@/components/ui/Pagination'
@@ -41,13 +41,11 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const [{ slug }, { page: pageParam }] = await Promise.all([params, searchParams])
   const categorySlug = slug[slug.length - 1]
 
-  const [category, postsData] = await Promise.all([
+  const [category, allPosts] = await Promise.all([
     getCategoryBySlug(categorySlug),
-    getPostsByCategory(categorySlug, 200),
+    getAllPostsByCategory(categorySlug),
   ])
   if (!category) notFound()
-
-  const allPosts = postsData.posts.nodes
   const page = Math.max(1, parseInt(pageParam || '1', 10))
   const totalPages = Math.ceil(allPosts.length / PER_PAGE)
   const currentPage = Math.min(page, Math.max(1, totalPages))

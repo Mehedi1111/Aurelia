@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPosts } from '@/lib/graphql/queries/posts'
+import { getAllBlogPosts } from '@/lib/graphql/queries/posts'
 import { getAllCategories } from '@/lib/graphql/queries/categories'
 import PostCard from '@/components/blog/PostCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
@@ -22,11 +22,10 @@ export default async function BlogPage({
   const { page: pageParam } = await searchParams
   const page = Math.max(1, parseInt(pageParam || '1', 10))
 
-  const [data, allCategories] = await Promise.all([
-    getPosts(500),
+  const [allPosts, allCategories] = await Promise.all([
+    getAllBlogPosts(),
     getAllCategories(),
   ])
-  const allPosts = data.posts.nodes
 
   const topCategories = allCategories
     .filter(c => !c.ancestors?.nodes?.length && (c.count ?? 0) > 0)

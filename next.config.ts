@@ -23,8 +23,10 @@ const nextConfig: NextConfig = {
       // ── GraphQL ── keeps WPGraphQL accessible via main domain too
       { source: '/graphql', destination: `${WP}/graphql` },
       // ── WordPress admin ──
-      { source: '/wp-admin/:path*', destination: `${WP}/wp-admin/:path*` },
-      { source: '/wp-login.php',    destination: `${WP}/wp-login.php` },
+      { source: '/wp-admin/:path*',              destination: `${WP}/wp-admin/:path*` },
+      { source: '/wp-login.php',                 destination: `${WP}/wp-login.php` },
+      { source: '/keys-to-affordable-jewelry',   destination: `${WP}/keys-to-affordable-jewelry` },
+      { source: '/keys-to-affordable-jewelry/',  destination: `${WP}/keys-to-affordable-jewelry/` },
       { source: '/wp-json/:path*',  destination: `${WP}/wp-json/:path*` },
       // ── Lasso affiliate redirects ──
       { source: '/go/:path*', destination: `${WP}/go/:path*` },

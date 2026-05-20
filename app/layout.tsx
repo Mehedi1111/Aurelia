@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import DealsBar from '@/components/layout/DealsBar'
+import ChatBubble from '@/components/chatbot/ChatBubble'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://moissanitebyaurelia.com'),
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <ChatBubble />
       </body>
     </html>
   )

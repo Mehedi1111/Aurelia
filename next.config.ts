@@ -8,33 +8,29 @@ const nextConfig: NextConfig = {
   },
 
   async rewrites() {
-    // WordPress backend URL — add a DNS A record for cms.moissanitebyaurelia.com
-    // pointing to 156.67.73.18 (Hostinger IP) so this works after domain switches to Vercel
-    const WP = 'https://moissanitebyaurelia.com'
+    // WordPress lives at cms.moissanitebyaurelia.com (Hostinger).
+    // Main domain moissanitebyaurelia.com now points to Vercel — never proxy back to it.
+    const WP = 'https://cms.moissanitebyaurelia.com'
 
-    // WordPress Pages (not posts) that need to be proxied — these have no Next.js route
     const WP_PAGES = [
       'faq',
       'engagement-ring-inspiration-gallery',
     ]
 
     return [
-      // Proxy Lasso affiliate redirect links to WordPress backend
-      { source: '/go/:path*', destination: `${WP}/go/:path*` },
-      // Keep WordPress admin and REST API accessible
+      // ── Media files ── fixes all images after domain switch to Vercel
+      { source: '/wp-content/:path*', destination: `${WP}/wp-content/:path*` },
+      // ── GraphQL ── keeps WPGraphQL accessible via main domain too
+      { source: '/graphql', destination: `${WP}/graphql` },
+      // ── WordPress admin ──
       { source: '/wp-admin/:path*', destination: `${WP}/wp-admin/:path*` },
-      { source: '/wp-login.php', destination: `${WP}/wp-login.php` },
-      { source: '/wp-json/:path*', destination: `${WP}/wp-json/:path*` },
-      // WordPress Pages without Next.js routes — proxy through to WordPress
-      ...WP_PAGES.map(slug => ({
-        source: `/${slug}/`,
-        destination: `${WP}/${slug}/`,
-      })),
-      // Also match without trailing slash
-      ...WP_PAGES.map(slug => ({
-        source: `/${slug}`,
-        destination: `${WP}/${slug}/`,
-      })),
+      { source: '/wp-login.php',    destination: `${WP}/wp-login.php` },
+      { source: '/wp-json/:path*',  destination: `${WP}/wp-json/:path*` },
+      // ── Lasso affiliate redirects ──
+      { source: '/go/:path*', destination: `${WP}/go/:path*` },
+      // ── WordPress Pages with no Next.js route ──
+      ...WP_PAGES.map(slug => ({ source: `/${slug}/`, destination: `${WP}/${slug}/` })),
+      ...WP_PAGES.map(slug => ({ source: `/${slug}`,  destination: `${WP}/${slug}/` })),
     ]
   },
 

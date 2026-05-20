@@ -10,7 +10,14 @@ const wpClient = new GraphQLClient(endpoint, {
 
 async function _fetchWP<T>(query: string, variables?: Record<string, unknown>): Promise<T | null> {
   try {
-    return await wpClient.request<T>(query, variables)
+    const data = await wpClient.request<T>(query, variables)
+    // WordPress stores media URLs as moissanitebyaurelia.com (now Vercel).
+    // Replace with cms subdomain so next/image fetches directly from Hostinger.
+    const json = JSON.stringify(data).replace(
+      /https?:\/\/(www\.)?moissanitebyaurelia\.com\/wp-content\//g,
+      'https://cms.moissanitebyaurelia.com/wp-content/',
+    )
+    return JSON.parse(json) as T
   } catch (error) {
     console.warn('WPGraphQL unavailable:', (error as Error).message?.slice(0, 120))
     return null

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Marcellus, DM_Sans } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -27,6 +28,21 @@ export const metadata: Metadata = {
   },
 }
 
+const marcellus = Marcellus({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-marcellus',
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+})
+
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -51,7 +67,7 @@ const orgSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scrollbar-thin">
+    <html lang="en" className={`${marcellus.variable} ${dmSans.variable} scrollbar-thin`}>
       <body className="min-h-screen flex flex-col bg-bg">
         <script
           type="application/ld+json"

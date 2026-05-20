@@ -4,6 +4,7 @@ import type { WPProductCard } from '@/types/wordpress'
 
 interface ProductCardProps {
   product: WPProductCard
+  priority?: boolean
 }
 
 function cleanPrice(price: string | null | undefined) {
@@ -18,7 +19,7 @@ function discount(regular: string | null | undefined, sale: string | null | unde
   return Math.round((1 - s / r) * 100)
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, priority = false }: ProductCardProps) {
   const pct = discount(product.regularPrice, product.salePrice)
   const cat = product.productCategories.nodes[0]
   const href = `/product/${product.slug}/`
@@ -41,6 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               fill
               className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              priority={priority}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-surface">

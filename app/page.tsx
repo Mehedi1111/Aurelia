@@ -262,8 +262,8 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-              {products.map(p => (
-                <ProductCard key={p.slug} product={p} />
+              {products.map((p, i) => (
+                <ProductCard key={p.slug} product={p} priority={i === 0} />
               ))}
             </div>
           </section>

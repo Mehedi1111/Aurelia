@@ -27,8 +27,8 @@ const config: Config = {
         card:    '#ffffff',
       },
       fontFamily: {
-        serif: ['Marcellus', 'Georgia', 'serif'],
-        sans:  ['DM Sans', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-marcellus)', 'Georgia', 'serif'],
+        sans:  ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
       typography: () => ({
         aurelia: {

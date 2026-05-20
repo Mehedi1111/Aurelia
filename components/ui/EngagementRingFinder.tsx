@@ -21,14 +21,14 @@ const RETAILERS: Record<string, Retailer> = {
   bluenile: {
     name: 'Blue Nile',
     tagline: 'Largest certified diamond inventory — trusted since 1999',
-    href: 'https://www.bluenile.com/',
+    href: 'https://bluenile.com/?a_aid=66fc3592af524&utm_source=pap&utm_medium=affiliates',
     reviewHref: '/category/blue-nile-jewelry-reviews-guide/',
     strengths: ['100,000+ GIA diamonds', '30-day free returns', 'Price match', 'Phone consultants'],
   },
   rarecarat: {
     name: 'Rare Carat',
     tagline: 'AI price comparison across 100+ vendors',
-    href: 'https://www.rarecarat.com/',
+    href: 'https://www.awin1.com/cread.php?awinmid=44489&awinaffid=1756887&ued=https%3A%2F%2Fwww.rarecarat.com%2F',
     reviewHref: '/category/diamond-review/',
     strengths: ['Aggregates 100+ vendors', 'AI grading analysis', 'Free gemologist check', 'Spot undervalued stones'],
   },

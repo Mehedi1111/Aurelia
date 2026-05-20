@@ -33,8 +33,8 @@ const FAQ_ITEMS = [
 ]
 
 const JA_LINK = 'https://www.jamesallen.com/?a_aid=66fc3592af524&a_cid=dfef9309&chan=home'
-const BN_LINK = 'https://www.bluenile.com/'
-const RC_LINK = 'https://www.rarecarat.com/'
+const BN_LINK = 'https://bluenile.com/?a_aid=66fc3592af524&utm_source=pap&utm_medium=affiliates'
+const RC_LINK = 'https://www.awin1.com/cread.php?awinmid=44489&awinaffid=1756887&ued=https%3A%2F%2Fwww.rarecarat.com%2F'
 
 export default function BestPlaceToBuyEngagementRingsPage() {
   const { year, monthYear, iso } = getCurrentDateInfo()

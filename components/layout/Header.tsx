@@ -231,17 +231,8 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right: Search + CTA + hamburger */}
+          {/* Right: CTA + hamburger */}
           <div className="flex items-center gap-2">
-            <Link
-              href="/search"
-              aria-label="Search"
-              className="p-2 text-text-muted hover:text-dark transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-              </svg>
-            </Link>
             <a
               href="https://www.bluenile.com/?a_aid=66fc3592af524&a_cid=55e51e63"
               target="_blank" rel="nofollow sponsored noopener"
@@ -396,9 +387,6 @@ export default function Header() {
             ))}
             <Link href="/jewelry-personality-quiz/" onClick={() => setMobileOpen(false)} className="block py-3.5 text-sm font-medium text-dark border-b border-border/60">
               Quiz
-            </Link>
-            <Link href="/search" onClick={() => setMobileOpen(false)} className="block py-3.5 text-sm font-medium text-dark border-b border-border/60">
-              Search
             </Link>
             <div className="py-4">
               <a

@@ -14,7 +14,7 @@ export default function PostBodyInteractive({ html }: { html: string }) {
   return (
     <div
       ref={ref}
-      className="wp-content"
+      className="wp-content prose prose-aurelia max-w-none"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )

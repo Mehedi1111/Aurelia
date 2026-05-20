@@ -201,8 +201,8 @@ export default function Header() {
               src="https://moissanitebyaurelia.com/wp-content/uploads/2024/08/AURELIA-horizontal.png.webp"
               alt="Aurelia — Fine Jewelry Guides"
               width={140} height={30}
-              className="h-7 w-auto object-contain"
-              priority unoptimized
+              className="w-[140px] h-7 object-contain"
+              priority
             />
           </Link>
 

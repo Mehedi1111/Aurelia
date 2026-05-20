@@ -128,14 +128,16 @@ export default function DealsBar() {
       </div>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex">
         {DEALS.map((_, i) => (
           <button
             key={i}
             onClick={() => { setVisible(false); setTimeout(() => { setIdx(i); setVisible(true) }, 220) }}
-            className={`w-1 h-1 rounded-full transition-all duration-300 ${i === idx ? 'bg-[#d19b8a] w-3' : 'bg-white/20'}`}
+            className="p-2 flex items-center justify-center"
             aria-label={`Go to deal ${i + 1}`}
-          />
+          >
+            <span className={`block rounded-full transition-all duration-300 h-1 ${i === idx ? 'bg-[#d19b8a] w-3' : 'bg-white/20 w-1'}`} />
+          </button>
         ))}
       </div>
     </div>

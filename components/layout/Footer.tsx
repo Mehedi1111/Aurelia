@@ -73,8 +73,7 @@ export default function Footer() {
                 src="https://moissanitebyaurelia.com/wp-content/uploads/2024/08/AURELIA-horizontal.png.webp"
                 alt="Moissanite by Aurelia — Fine Jewelry Guides"
                 width={130} height={28}
-                className="h-7 w-auto object-contain"
-                unoptimized
+                className="w-[130px] h-7 object-contain"
               />
             </Link>
             <p className="text-xs text-text-muted leading-relaxed mb-3">

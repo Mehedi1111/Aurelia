@@ -30,7 +30,7 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
               alt={post.featuredImage.node.altText || post.title}
               fill
               className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-              sizes="(max-width: 640px) 100vw, 50vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
               priority
             />
           </div>
@@ -72,7 +72,7 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
             alt={post.featuredImage.node.altText || post.title}
             fill
             className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 640px) 50vw, 33vw"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-surface">

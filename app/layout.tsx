@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
 import { Marcellus, DM_Sans } from 'next/font/google'
-import dynamic from 'next/dynamic'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import DealsBar from '@/components/layout/DealsBar'
-
-// Defer chatbot until after page is interactive — keeps it out of the critical JS bundle
-const ChatBubble = dynamic(() => import('@/components/chatbot/ChatBubble'), { ssr: false })
+import ChatBubbleLoader from '@/components/chatbot/ChatBubbleLoader'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://moissanitebyaurelia.com'),
@@ -82,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <ChatBubble />
+        <ChatBubbleLoader />
       </body>
     </html>
   )

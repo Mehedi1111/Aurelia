@@ -1,4 +1,5 @@
 import { cleanWordPressContent } from '@/lib/content/parseContent'
+import PostBodyInteractive from './PostBodyInteractive'
 
 interface PostBodyProps {
   content: string
@@ -6,7 +7,5 @@ interface PostBodyProps {
 
 export default function PostBody({ content }: PostBodyProps) {
   const cleaned = cleanWordPressContent(content)
-  return (
-    <div className="wp-content" dangerouslySetInnerHTML={{ __html: cleaned }} />
-  )
+  return <PostBodyInteractive html={cleaned} />
 }

@@ -202,6 +202,112 @@
   .au-review-pros { border-right: none; border-bottom: 1px solid #ede8e4; }
 }
 
+/* ─── Moissanite Pro Quiz ───────────────────────────────────────────────── */
+.moissanite-quiz-section {
+  background-color: #111111; padding: 20px 10px; text-align: center;
+  border-radius: 10px; margin-bottom: 30px; box-sizing: border-box;
+  font-family: var(--font-marcellus), Georgia, serif;
+}
+.moissanite-quiz-section .quiz-title p {
+  color: #ffffff; font-size: 1.75em; font-weight: 400; margin: 0 0 20px;
+}
+.moissanite-quiz-section .description {
+  color: rgba(255,255,255,0.8); margin-top: 20px; font-size: 1em; line-height: 1.6;
+}
+.moissanite-quiz-section .gemstone-options {
+  display: flex; justify-content: center; align-items: flex-start; gap: 15px;
+}
+.moissanite-quiz-section .gemstone-option {
+  flex-basis: 45%; max-width: 180px; text-align: center;
+}
+.moissanite-quiz-section .gemstone-option a { text-decoration: none; }
+.moissanite-quiz-section .gemstone-option img {
+  width: 100%; height: auto; border: 3px solid transparent;
+  border-radius: 50%; transition: border-color 0.3s ease; display: block; margin: 0 auto;
+}
+.moissanite-quiz-section .gemstone-option:hover img { border-color: #d19b8a; }
+.moissanite-quiz-section .gemstone-option button {
+  display: block; margin: 10px auto; padding: 10px 25px;
+  background-color: #ffffff; border: none; border-radius: 25px; font-size: 1em;
+  color: #111111; cursor: pointer; transition: all 0.3s ease;
+  font-family: var(--font-marcellus), Georgia, serif;
+}
+.moissanite-quiz-section .gemstone-option button:hover { background-color: #d19b8a; color: #ffffff; }
+@media (min-width: 640px) {
+  .moissanite-quiz-section .quiz-title p { font-size: 2.2em; }
+  .moissanite-quiz-section .gemstone-option { max-width: 220px; }
+  .moissanite-quiz-section .description { font-size: 1.125em; }
+}
+
+/* ─── Pearl Pro Quiz ────────────────────────────────────────────────────── */
+.pearl-quiz-section {
+  background-color: #111111; padding: 20px 10px; text-align: center;
+  border-radius: 10px; margin: 20px auto; box-sizing: border-box; overflow: hidden;
+}
+.pearl-quiz-section .quiz-title p {
+  color: #ffffff; font-family: var(--font-marcellus), Georgia, serif;
+  font-size: 1.8em; font-weight: 400; line-height: 1.2; margin-bottom: 20px;
+}
+.pearl-quiz-section .description {
+  color: rgba(255,255,255,0.8); font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 1em; line-height: 1.6; margin-top: 20px;
+}
+.price-natural-pearl { color: #FFD700; font-weight: 700; }
+.price-cultured-pearl { color: #C0C0C0; font-weight: 700; }
+.pearl-quiz-section .pearl-options {
+  display: flex; flex-direction: row; justify-content: center;
+  align-items: flex-start; gap: 15px;
+}
+.pearl-quiz-section .pearl-option { flex-basis: 45%; max-width: 220px; cursor: pointer; }
+.pearl-quiz-section img {
+  width: 100%; height: auto; max-width: 200px; border: 3px solid transparent;
+  border-radius: 10px; transition: border-color 0.3s ease, transform 0.3s ease;
+  display: block; margin: 0 auto;
+}
+.pearl-quiz-section .pearl-option:hover img { border-color: #d19b8a; transform: scale(1.03); }
+.pearl-quiz-section button.select-button {
+  display: block; margin: 10px auto 0; padding: 10px 20px;
+  background-color: #ffffff; border: none; border-radius: 25px;
+  font-size: 0.938em; font-weight: 700;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  color: #111111; cursor: pointer; transition: all 0.3s ease;
+}
+.pearl-quiz-section button.select-button:hover { background-color: #d19b8a; color: #ffffff; }
+.pearl-label {
+  display: none; color: #ffffff;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-weight: 700; font-size: 1.1em; margin-top: 10px; line-height: 1.4;
+}
+.quiz-result-pearl { display: none; margin-top: 25px; }
+.result-message-pearl {
+  color: #ffffff; font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 1.1em; line-height: 1.6; max-width: 600px; margin: 0 auto 20px;
+}
+.result-ctas-pearl {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; gap: 15px; margin-top: 20px;
+}
+.cta-button-pearl {
+  display: inline-block; padding: 12px 25px; text-decoration: none !important;
+  border-bottom: none !important; border-radius: 25px; font-weight: 700;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  transition: all 0.3s ease; width: 80%; max-width: 300px; box-sizing: border-box;
+}
+.cta-button-pearl.cultured { background-color: #C0C0C0; color: #111111 !important; }
+.cta-button-pearl.cultured:hover { background-color: #ffffff; box-shadow: 0 0 15px rgba(192,192,192,0.8); }
+.cta-button-pearl.natural { background-color: #FFD700; color: #111111 !important; }
+.cta-button-pearl.natural:hover { background-color: #ffffff; box-shadow: 0 0 15px rgba(255,215,0,0.8); }
+@media (min-width: 640px) {
+  .pearl-quiz-section { max-width: 1100px; padding: 40px 20px; }
+  .pearl-quiz-section .quiz-title p { font-size: 2.8em; }
+  .pearl-quiz-section .pearl-options { gap: 60px; }
+  .pearl-quiz-section img { max-width: 300px; }
+  .pearl-quiz-section button.select-button { font-size: 1em; }
+  .pearl-quiz-section .description { font-size: 1.2em; }
+  .result-ctas-pearl { flex-direction: row; }
+  .result-message-pearl { font-size: 1.2em; max-width: 700px; }
+}
+
 /* ─── Category description ──────────────────────────────────────────────── */
 .category-description h2 { font-family: var(--font-marcellus), Georgia, serif; font-size: 1.25rem; color: #111111; margin-top: 1.5rem; margin-bottom: 0.75rem; }
 .category-description p { color: #737373; font-size: 0.875rem; line-height: 1.625; margin-bottom: 1rem; }

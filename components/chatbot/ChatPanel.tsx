@@ -194,17 +194,19 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
                         href={p.url}
                         className="flex items-center gap-3 bg-surface border border-border rounded-xl p-2.5 hover:border-accent transition-colors group"
                       >
-                        {p.image ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={p.image}
-                            alt={p.imageAlt}
-                            className="w-12 h-12 rounded-lg object-cover flex-shrink-0 bg-border"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-12 h-12 rounded-lg bg-border flex-shrink-0" />
-                        )}
+                        {/* Wrapper always reserves the 48px square; img fills it if it loads */}
+                        <div className="w-12 h-12 rounded-lg flex-shrink-0 overflow-hidden bg-border">
+                          {p.image && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={p.image}
+                              alt=""
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                              onError={(e) => { e.currentTarget.style.display = 'none' }}
+                            />
+                          )}
+                        </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-medium text-dark leading-snug line-clamp-2 group-hover:text-accent transition-colors">
                             {p.name}

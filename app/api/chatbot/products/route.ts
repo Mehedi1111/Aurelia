@@ -37,6 +37,13 @@ interface ProductNode {
   onSale?: boolean
 }
 
+// WPGraphQL may return the CMS subdomain in image URLs — normalize to main domain
+function normalizeImageUrl(url: string): string {
+  return url
+    .replace('https://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com')
+    .replace('http://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com')
+}
+
 export async function POST(req: NextRequest) {
   let body: { query?: string }
   try {
@@ -55,7 +62,7 @@ export async function POST(req: NextRequest) {
       name: p.name,
       slug: p.slug,
       url: p.uri || `/product/${p.slug}/`,
-      image: p.image?.sourceUrl ?? null,
+      image: p.image?.sourceUrl ? normalizeImageUrl(p.image.sourceUrl) : null,
       imageAlt: p.image?.altText || p.name,
       price: p.price ?? null,
       onSale: p.onSale ?? false,

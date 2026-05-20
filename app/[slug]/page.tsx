@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPostSlugs, getPostBySlug, getRelatedPosts } from '@/lib/graphql/queries/posts'
-import { getCurrentDateInfo } from '@/lib/utils/currentDate'
+import { getCurrentDateInfo, processContentDates } from '@/lib/utils/currentDate'
 import { extractTableOfContents, extractFAQs, extractReviewRating } from '@/lib/content/parseContent'
 import PostBody from '@/components/blog/PostBody'
 import TableOfContents from '@/components/blog/TableOfContents'
@@ -56,10 +56,7 @@ export default async function PostPage({ params }: PostPageProps) {
   if (!post) notFound()
 
   const { year, month, monthYear, iso } = getCurrentDateInfo()
-  const processedContent = post.content
-    .replace(/\[month_year\]/gi, monthYear)
-    .replace(/\[month\]/gi, month)
-    .replace(/\[year\]/gi, String(year))
+  const processedContent = processContentDates(post.content, month, year, monthYear)
 
   const tocEntries = extractTableOfContents(processedContent)
   const faqEntries = extractFAQs(processedContent)

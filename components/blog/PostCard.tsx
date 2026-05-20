@@ -23,8 +23,7 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
     return (
       <article className="group grid grid-cols-1 sm:grid-cols-2 gap-0 border border-border rounded-xl overflow-hidden hover:border-accent-muted transition-colors duration-200">
         {post.featuredImage && (
-          /* Square on mobile, fills grid cell on sm+ */
-          <div className="relative aspect-square overflow-hidden">
+          <div className="hidden sm:block relative aspect-square overflow-hidden">
             <Image
               src={post.featuredImage.node.sourceUrl}
               alt={post.featuredImage.node.altText || post.title}

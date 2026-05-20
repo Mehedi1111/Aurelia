@@ -1,3 +1,4 @@
+import '../../wordpress.css'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getAllCategorySlugs, getCategoryBySlug } from '@/lib/graphql/queries/categories'

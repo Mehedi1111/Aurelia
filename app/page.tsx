@@ -44,7 +44,7 @@ const PARTNERS = [
     name: 'Rare Carat',
     tag: 'Best Deals',
     desc: 'AI compares thousands of diamonds instantly. Always get the best price.',
-    href: 'https://www.rarecarat.com/',
+    href: 'https://www.awin1.com/cread.php?awinmid=44489&awinaffid=1756887&ued=https%3A%2F%2Fwww.rarecarat.com%2F',
     deal: 'Up to 40% Off Sitewide',
     accent: '#059669',
   },
@@ -107,13 +107,13 @@ export default async function HomePage() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="/moissanite/"
+                  href="/diamond-buying-guide/"
                   className="inline-flex items-center gap-2 bg-dark text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-accent transition-colors"
                 >
-                  Moissanite Guide →
+                  Diamond Buying Guide →
                 </Link>
                 <Link
-                  href="/which-is-more-sparkly-diamond-or-moissanite/"
+                  href="/moissanite-vs-diamond-comparison/"
                   className="inline-flex items-center gap-2 border border-border text-dark text-sm font-medium px-6 py-3 rounded-lg hover:border-accent hover:text-accent transition-colors"
                 >
                   Moissanite vs Diamond

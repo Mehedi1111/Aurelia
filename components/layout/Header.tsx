@@ -4,16 +4,38 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// ─── Mega menu data ───────────────────────────────────────────────────────────
-
-const MEGA: Array<{
+interface MegaLink {
   label: string
   href: string
-  columns: Array<{
-    heading: string
-    links: Array<{ label: string; href: string; desc?: string }>
-  }>
-}> = [
+  desc?: string
+  affiliate?: boolean
+}
+
+interface MegaColumn {
+  heading: string
+  links: MegaLink[]
+}
+
+interface MegaDeal {
+  retailer: string
+  headline: string
+  sub: string
+  href: string
+  cta: string
+}
+
+interface MegaItem {
+  label: string
+  href: string
+  columns: MegaColumn[]
+  deal: MegaDeal
+  viewAllHref?: string
+  viewAllText?: string
+}
+
+// ─── Mega menu data ───────────────────────────────────────────────────────────
+
+const MEGA: MegaItem[] = [
   {
     label: 'Moissanite',
     href: '/category/moissanite/',
@@ -21,22 +43,30 @@ const MEGA: Array<{
       {
         heading: 'Learn',
         links: [
-          { label: 'Complete Moissanite Guide',   href: '/moissanite/',                                   desc: 'Everything you need to know' },
-          { label: 'Moissanite vs Diamond',       href: '/which-is-more-sparkly-diamond-or-moissanite/', desc: 'Side-by-side comparison' },
-          { label: '4Cs of Moissanite',           href: '/4cs-of-moissanite/',                           desc: 'Cut, color, clarity & carat' },
-          { label: 'Moissanite Color Chart',      href: '/moissanite-color-chart-secret/',               desc: 'D–Z scale explained' },
-          { label: 'Best Moissanite Rings',       href: '/category/moissanite/',                         desc: 'Top picks by budget' },
+          { label: 'Complete Moissanite Guide',  href: '/category/moissanite/',                    desc: 'Everything you need to know' },
+          { label: 'Moissanite vs Diamond',       href: '/diamond-vs-moissanite-in-sunlight/',      desc: 'Side-by-side comparison' },
+          { label: '4Cs of Moissanite',           href: '/4cs-of-moissanite/',                      desc: 'Cut, color, clarity & carat' },
+          { label: 'Moissanite Guide',            href: '/moissanite/',                             desc: 'Complete buyer guide' },
+          { label: 'GRA Moissanite Guide',        href: '/gra-moissanite-ring/',                    desc: 'GRA certified stones explained' },
+          { label: 'Moissanite Jewelry',          href: '/product-category/moissanite-jewelry/',    desc: 'Shop moissanite pieces' },
         ],
       },
       {
         heading: 'Best Retailers',
         links: [
-          { label: 'Charles & Colvard',  href: '/category/charles-colvard/',                     desc: 'Original moissanite brand' },
-          { label: 'James Allen',        href: '/category/james-allen-reviews-guides/',           desc: '360° HD diamond view' },
-          { label: 'Blue Nile',          href: '/category/blue-nile-jewelry-reviews-guide/',      desc: 'Largest selection online' },
+          { label: 'Charles & Colvard',      href: 'https://charlesandcolvard.sjv.io/xLZ4gR',                                                                          desc: 'Original moissanite brand', affiliate: true },
+          { label: 'C&C Review',             href: '/charles-and-colvard-reviews/',                                                                                     desc: 'Full review by Mehedi' },
+          { label: 'James Allen Moissanite', href: 'https://www.jamesallen.com/gemstones/moissanite/?a_aid=66fc3592af524&a_cid=dfef9309&chan=deal_notice',              desc: 'Largest selection online',  affiliate: true },
         ],
       },
     ],
+    deal: {
+      retailer: 'Charles & Colvard',
+      headline: 'Up to 40% Off',
+      sub: 'Moissanite Fine Jewelry',
+      href: 'https://charlesandcolvard.sjv.io/enEqEz',
+      cta: 'Shop the Sale',
+    },
   },
   {
     label: 'Diamond',
@@ -45,30 +75,39 @@ const MEGA: Array<{
       {
         heading: 'Education',
         links: [
-          { label: 'Diamond 4Cs Guide',     href: '/diamond-grading-chart-4-cs-of-diamonds/', desc: 'Master cut, color, clarity, carat' },
-          { label: 'Diamond Cut Chart',     href: '/diamond-cut-chart/',                      desc: 'Excellent to Poor grades' },
-          { label: 'Carat Size Chart',      href: '/diamond-carat-size-chart/',               desc: 'MM to carat visual guide' },
-          { label: 'All Diamond Guides',    href: '/category/diamond-buying-guide/',          desc: 'Full buying guide hub' },
+          { label: 'Diamond 4Cs Guide',   href: '/diamond-grading-chart-4-cs-of-diamonds/',        desc: 'Master cut, color, clarity, carat' },
+          { label: 'Diamond Cut Chart',   href: '/moissanite-cut-chart/',                           desc: 'Excellent to Poor grades' },
+          { label: 'Carat Size Chart',    href: '/category/diamond/diamond-shapes-guide/',          desc: 'MM to carat visual guide' },
+          { label: 'All Diamond Guides',  href: '/category/diamond/',                               desc: 'Full buying guide hub' },
         ],
       },
       {
         heading: 'Lab-Grown',
         links: [
-          { label: 'Lab-Grown Diamond Guide',  href: '/category/lab-grown-diamond/',   desc: 'Complete buyer guide' },
-          { label: 'Natural vs Lab-Grown',     href: '/category/lab-grown-diamond/',   desc: 'Price & quality vs natural' },
-          { label: 'IGI vs GIA Certificates',  href: '/category/diamond-buying-guide/', desc: 'Which cert to trust' },
+          { label: 'Lab-Grown Diamond Guide',     href: '/category/lab-grown-diamond/',                       desc: 'Complete buyer guide' },
+          { label: 'Fancy Color Diamond Guide',   href: '/category/diamond/fancy-color-diamonds/',             desc: 'Pink, yellow & rare hues' },
+          { label: 'Diamond Certification',       href: '/category/diamond/diamond-certifications-guide/',     desc: 'Which cert to trust' },
         ],
       },
       {
         heading: 'Where to Buy',
         links: [
-          { label: 'Blue Nile Review',     href: '/category/blue-nile-jewelry-reviews-guide/', desc: 'Best overall diamond retailer' },
-          { label: 'James Allen Review',   href: '/james-allen-review/',                       desc: 'Best 360° video selection' },
-          { label: 'Rare Carat Review',    href: '/category/diamond-review/',                  desc: 'AI-powered price comparison' },
-          { label: 'All Retailer Reviews', href: '/category/diamond-review/',                  desc: '' },
+          { label: 'Blue Nile Review',     href: '/category/blue-nile-jewelry-reviews-guide/',   desc: 'Best overall diamond retailer' },
+          { label: 'James Allen Review',   href: '/category/james-allen-reviews-guides/',         desc: 'Best 360° video selection' },
+          { label: 'Rare Carat Review',    href: '/rare-carat-reviews-legit/',                    desc: 'AI-powered price comparison' },
+          { label: 'All Retailer Reviews', href: '/top-jewelry-retailers/',                       desc: '' },
         ],
       },
     ],
+    deal: {
+      retailer: 'Blue Nile Vault Sale',
+      headline: 'Up to 70% Off',
+      sub: 'Certified Diamonds',
+      href: 'https://www.bluenile.com/clear-the-vault?a_aid=66fc3592af524&a_cid=55e51e63&chan=home',
+      cta: 'Shop the Vault',
+    },
+    viewAllHref: '/category/diamond-buying-guide/',
+    viewAllText: 'View all Diamond guides',
   },
   {
     label: 'Gemstones',
@@ -77,22 +116,31 @@ const MEGA: Array<{
       {
         heading: 'By Stone',
         links: [
-          { label: 'Sapphire Guide',    href: '/category/gemstone/sapphire-guide/',        desc: 'Blue, pink & padparadscha' },
-          { label: 'Pearl Guide',       href: '/category/gemstone/pearl/',                 desc: 'Freshwater vs Akoya' },
-          { label: 'Moonstone',         href: '/category/moonstone/',                      desc: 'Adularescence explained' },
-          { label: 'Birthstones A–Z',  href: '/category/gemstone/birthstones-by-month/', desc: 'All 12 months' },
-          { label: 'All Gemstones',    href: '/category/gemstone/',                       desc: '' },
+          { label: 'Sapphire Guide',        href: '/category/gemstone/sapphire-guide/',          desc: 'Blue, pink & padparadscha' },
+          { label: 'Pearl Guide',           href: '/category/gemstone/pearl/',                   desc: 'Freshwater vs Akoya' },
+          { label: 'Moonstone',             href: '/category/moonstone/',                        desc: 'Adularescence explained' },
+          { label: 'Birthstones A–Z',       href: '/category/gemstone/birthstones-by-month/',    desc: 'All 12 months' },
+          { label: 'All Gemstone Jewelry',  href: '/product-category/gemstone-jewelry/',         desc: 'Shop gemstone pieces' },
         ],
       },
       {
         heading: 'Buying Guides',
         links: [
-          { label: 'Colored Gemstone Guide',     href: '/category/gemstone/', desc: 'How to buy colored stones' },
-          { label: 'Gemstone Engagement Rings',  href: '/category/gemstone/', desc: 'Alternatives to diamonds' },
-          { label: 'Gemstone vs Diamond',        href: '/category/gemstone/', desc: 'Value & beauty comparison' },
+          { label: 'All Gemstone Guides',         href: '/category/gemstone/',               desc: 'How to buy colored stones' },
+          { label: 'Gemstone Engagement Rings',   href: '/category/gemstone/',               desc: 'Alternatives to diamonds' },
+          { label: 'Jewelry Gift Guide',          href: '/category/jewelry-gift-guide/',     desc: 'Gifts for every occasion' },
         ],
       },
     ],
+    deal: {
+      retailer: 'gemsNY',
+      headline: 'Up to 30% Off',
+      sub: 'Certified Natural Gemstones',
+      href: 'https://gemsny.sjv.io/R0OoZg',
+      cta: 'Shop the Sale',
+    },
+    viewAllHref: '/category/jewelry-gift-guide/',
+    viewAllText: 'Jewelry gift guides',
   },
   {
     label: 'Calculators',
@@ -124,6 +172,15 @@ const MEGA: Array<{
         ],
       },
     ],
+    deal: {
+      retailer: 'Blue Nile Vault Sale',
+      headline: 'Up to 70% Off',
+      sub: 'Certified Diamonds',
+      href: 'https://www.bluenile.com/clear-the-vault?a_aid=66fc3592af524&a_cid=55e51e63&chan=168657',
+      cta: 'Shop the Vault',
+    },
+    viewAllHref: '/jewelry-calculators/',
+    viewAllText: 'View all Calculators',
   },
   {
     label: 'Reviews',
@@ -132,23 +189,32 @@ const MEGA: Array<{
       {
         heading: 'Retailer Reviews',
         links: [
-          { label: 'Blue Nile Review',         href: '/category/blue-nile-jewelry-reviews-guide/', desc: 'Best prices on certified diamonds' },
-          { label: 'James Allen Review',       href: '/james-allen-review/',                       desc: '360° HD for every diamond' },
-          { label: 'Charles & Colvard Review', href: '/category/charles-colvard/',                 desc: 'Original moissanite brand' },
-          { label: 'Rare Carat Review',        href: '/category/diamond-review/',                  desc: 'AI price comparison tool' },
-          { label: 'Ritani Review',            href: '/category/diamond-review/',                  desc: 'Try-at-home program' },
-          { label: 'All Reviews',              href: '/category/diamond-review/',                  desc: '' },
+          { label: 'Blue Nile Review',         href: '/blue-nile-reviews/',              desc: 'Best prices on certified diamonds' },
+          { label: 'James Allen Review',       href: '/james-allen-review/',             desc: '360° HD for every diamond' },
+          { label: 'Charles & Colvard Review', href: '/charles-and-colvard-reviews/',    desc: 'Original moissanite brand' },
+          { label: 'Rare Carat Review',        href: '/rare-carat-reviews-legit/',       desc: 'AI price comparison tool' },
+          { label: 'Ritani Review',            href: '/is-ritani-legit/',                desc: 'Try-at-home program' },
+          { label: 'All Reviews',              href: '/category/diamond-review/',        desc: '' },
         ],
       },
       {
         heading: 'Comparisons',
         links: [
-          { label: 'Blue Nile vs James Allen',  href: '/category/diamond-review/',     desc: 'Head-to-head price & UX' },
-          { label: 'Natural vs Lab Diamond',    href: '/category/lab-grown-diamond/',  desc: 'Which is the better buy?' },
-          { label: 'Is Rare Carat Legit?',      href: '/category/diamond-review/',     desc: 'Honest verdict' },
+          { label: 'Blue Nile vs James Allen',  href: '/james-allen-vs-blue-nile/',   desc: 'Head-to-head price & UX' },
+          { label: 'Blue Nile vs VRAI',         href: '/vrai-vs-blue-nile/',          desc: 'Lab diamond specialist vs giant' },
+          { label: 'Blue Nile vs Ritani',       href: '/ritani-vs-blue-nile/',        desc: 'Honest verdict' },
         ],
       },
     ],
+    deal: {
+      retailer: 'Blue Nile Vault Sale',
+      headline: 'Up to 70% Off',
+      sub: 'Certified Diamonds',
+      href: 'https://www.bluenile.com/clear-the-vault?a_aid=66fc3592af524&a_cid=55e51e63&chan=home',
+      cta: 'Shop the Vault',
+    },
+    viewAllHref: '/category/diamond-review/',
+    viewAllText: 'View all Reviews guides',
   },
 ]
 
@@ -281,18 +347,35 @@ export default function Header() {
                         <ul className="space-y-0.5">
                           {col.links.map(link => (
                             <li key={link.label}>
-                              <Link
-                                href={link.href}
-                                onClick={() => setActive(null)}
-                                className="group flex flex-col py-2 px-2.5 -mx-2.5 rounded-md hover:bg-surface transition-colors"
-                              >
-                                <span className="text-[13px] font-medium text-dark group-hover:text-accent transition-colors leading-snug">
-                                  {link.label}
-                                </span>
-                                {link.desc && (
-                                  <span className="text-[11px] text-text-subtle mt-0.5 leading-snug">{link.desc}</span>
-                                )}
-                              </Link>
+                              {link.affiliate ? (
+                                <a
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="sponsored noopener noreferrer"
+                                  onClick={() => setActive(null)}
+                                  className="group flex flex-col py-2 px-2.5 -mx-2.5 rounded-md hover:bg-surface transition-colors"
+                                >
+                                  <span className="text-[13px] font-medium text-dark group-hover:text-accent transition-colors leading-snug">
+                                    {link.label}
+                                  </span>
+                                  {link.desc && (
+                                    <span className="text-[11px] text-text-subtle mt-0.5 leading-snug">{link.desc}</span>
+                                  )}
+                                </a>
+                              ) : (
+                                <Link
+                                  href={link.href}
+                                  onClick={() => setActive(null)}
+                                  className="group flex flex-col py-2 px-2.5 -mx-2.5 rounded-md hover:bg-surface transition-colors"
+                                >
+                                  <span className="text-[13px] font-medium text-dark group-hover:text-accent transition-colors leading-snug">
+                                    {link.label}
+                                  </span>
+                                  {link.desc && (
+                                    <span className="text-[11px] text-text-subtle mt-0.5 leading-snug">{link.desc}</span>
+                                  )}
+                                </Link>
+                              )}
                             </li>
                           ))}
                         </ul>
@@ -301,24 +384,24 @@ export default function Header() {
                   </div>
                 </div>
 
-                {/* Featured deal panel */}
+                {/* Per-item deal panel */}
                 <div className="hidden xl:flex flex-col justify-between pl-10 border-l border-border ml-10 min-w-[200px]">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-text-subtle mb-4 pb-2 border-b border-border">
                       Today&apos;s Deal
                     </p>
                     <a
-                      href="https://www.bluenile.com/clear-the-vault?a_aid=66fc3592af524&a_cid=55e51e63&chan=168657"
+                      href={item.deal.href}
                       target="_blank" rel="nofollow sponsored noopener"
                       onClick={() => setActive(null)}
                       className="group block rounded-xl overflow-hidden border border-border hover:border-accent transition-colors"
                     >
                       <div className="bg-dark px-4 py-4">
-                        <p className="text-[10px] text-accent uppercase tracking-widest font-medium mb-1.5">Blue Nile Vault Sale</p>
-                        <p className="font-serif text-white text-base leading-snug">Up to 70% Off<br />Certified Diamonds</p>
+                        <p className="text-[10px] text-accent uppercase tracking-widest font-medium mb-1.5">{item.deal.retailer}</p>
+                        <p className="font-serif text-white text-base leading-snug">{item.deal.headline}<br />{item.deal.sub}</p>
                       </div>
                       <div className="px-4 py-2.5 text-[12px] text-accent font-medium group-hover:text-accent-dark transition-colors flex items-center gap-1">
-                        Shop the Vault
+                        {item.deal.cta}
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                       </div>
                     </a>
@@ -328,8 +411,8 @@ export default function Header() {
 
               {/* Bottom strip */}
               <div className="mt-7 pt-5 border-t border-border flex items-center justify-between">
-                <Link href={item.href} onClick={() => setActive(null)} className="text-[12px] text-accent font-medium hover:text-accent-dark transition-colors">
-                  View all {item.label} guides →
+                <Link href={item.viewAllHref ?? item.href} onClick={() => setActive(null)} className="text-[12px] text-accent font-medium hover:text-accent-dark transition-colors">
+                  {item.viewAllText ?? `View all ${item.label} guides`} →
                 </Link>
                 <p className="hidden sm:block text-[11px] text-text-subtle">
                   415+ expert articles · Cited in People &amp; Us Weekly
@@ -360,16 +443,29 @@ export default function Header() {
                     {item.columns.map(col => (
                       <div key={col.heading}>
                         <p className="text-[10px] uppercase tracking-widest text-text-subtle font-semibold mb-2">{col.heading}</p>
-                        {col.links.map(link => (
-                          <Link
-                            key={link.label}
-                            href={link.href}
-                            onClick={() => { setMobileOpen(false); setMobileExp(null) }}
-                            className="block py-1.5 text-[13px] text-text-muted hover:text-accent transition-colors"
-                          >
-                            {link.label}
-                          </Link>
-                        ))}
+                        {col.links.map(link =>
+                          link.affiliate ? (
+                            <a
+                              key={link.label}
+                              href={link.href}
+                              target="_blank"
+                              rel="sponsored noopener noreferrer"
+                              onClick={() => { setMobileOpen(false); setMobileExp(null) }}
+                              className="block py-1.5 text-[13px] text-text-muted hover:text-accent transition-colors"
+                            >
+                              {link.label}
+                            </a>
+                          ) : (
+                            <Link
+                              key={link.label}
+                              href={link.href}
+                              onClick={() => { setMobileOpen(false); setMobileExp(null) }}
+                              className="block py-1.5 text-[13px] text-text-muted hover:text-accent transition-colors"
+                            >
+                              {link.label}
+                            </Link>
+                          )
+                        )}
                       </div>
                     ))}
                   </div>

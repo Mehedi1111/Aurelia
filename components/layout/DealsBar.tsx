@@ -4,38 +4,31 @@ import { useState, useEffect, useCallback } from 'react'
 
 const DEALS = [
   {
-    tag: "Mother's Day",
-    text: "Up To 30% Off select fine jewelry",
-    retailer: "Blue Nile",
-    href: "https://www.bluenile.com/?a_aid=66fc3592af524&a_cid=55e51e63",
-    cta: "Shop Sale",
-  },
-  {
     tag: "New Collection",
     text: "Shop the James Allen Collection at Blue Nile",
     retailer: "Blue Nile",
-    href: "https://www.bluenile.com/?a_aid=66fc3592af524&a_cid=55e51e63",
+    href: "https://www.bluenile.com/jewelry/by-james-allen?a_aid=66fc3592af524&a_cid=55e51e63&chan=deal_notice",
     cta: "Explore Now",
-  },
-  {
-    tag: "Vault Sale",
-    text: "Clear The Vault — Up to 70% OFF",
-    retailer: "Blue Nile",
-    href: "https://www.bluenile.com/clear-the-vault?a_aid=66fc3592af524&a_cid=55e51e63&chan=168657",
-    cta: "Shop 70% Off",
   },
   {
     tag: "Flash Sale",
     text: "Up to 40% OFF sitewide",
     retailer: "Rare Carat",
-    href: "https://www.rarecarat.com/",
+    href: "https://www.awin1.com/cread.php?awinmid=44489&awinaffid=1756887&ued=https%3A%2F%2Fwww.rarecarat.com%2F",
     cta: "Shop Now",
+  },
+  {
+    tag: "Memorial Day",
+    text: "Up To 30% Off select fine jewelry",
+    retailer: "Blue Nile",
+    href: "https://www.bluenile.com/jewelry/todays-jewelry-deals?a_aid=66fc3592af524&a_cid=55e51e63&chan=deal_notice",
+    cta: "Shop Sale",
   },
   {
     tag: "Exclusive",
     text: "Up to 60% OFF select fine jewelry",
     retailer: "Ritani",
-    href: "https://ritani.vxca.net/",
+    href: "https://ritani.vxca.net/VObK23",
     cta: "View Offer",
   },
 ]

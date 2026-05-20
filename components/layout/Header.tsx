@@ -154,7 +154,6 @@ const MEGA: Array<{
 
 const SIMPLE = [
   { label: 'Shop', href: '/shop-fine-jewelry/' },
-  { label: 'Blog', href: '/blog/' },
 ]
 
 // ─── Component ────────────────────────────────────────────────────────────────

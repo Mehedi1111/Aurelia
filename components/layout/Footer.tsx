@@ -27,11 +27,13 @@ const COLS = {
     { label: 'Pearl Value',          href: '/pearl-value-calculator/' },
   ],
   'Tools': [
-    { label: 'Diamond IQ Quiz',     href: '/jewelry-personality-quiz/' },
-    { label: 'Jewelry Coupons',     href: '/jewelry-coupons/' },
-    { label: 'Blue Nile Promo',     href: '/blue-nile-promo-code/' },
-    { label: 'James Allen Deals',   href: '/james-allen-promotional-code/' },
-    { label: 'Shop Fine Jewelry',   href: '/shop-fine-jewelry/' },
+    { label: 'Gem IQ Quizzes',             href: '/jewelry-personality-quiz/' },
+    { label: 'Retailer Matchmaker Quiz',   href: '/best-jewelry-retailer-quiz/' },
+    { label: 'Jewelry Coupons',            href: '/jewelry-coupons/' },
+    { label: 'Blue Nile Promo Code',       href: '/blue-nile-promo-code/' },
+    { label: 'James Allen Promo Code',     href: '/james-allen-promotional-code/' },
+    { label: 'C&C Discount Code',          href: '/charles-and-colvard-discount-code/' },
+    { label: 'Shop Fine Jewelry',          href: '/shop-fine-jewelry/' },
   ],
   'About': [
     { label: 'About Mehedi',         href: '/about-mehedi/' },

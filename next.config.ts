@@ -14,10 +14,6 @@ const nextConfig: NextConfig = {
 
     // WordPress Pages (not posts) that need to be proxied — these have no Next.js route
     const WP_PAGES = [
-      'jewelry-coupons',
-      'blue-nile-promo-code',
-      'james-allen-promotional-code',
-      'best-jewelry-retailer-quiz',
       'faq',
       'engagement-ring-inspiration-gallery',
     ]

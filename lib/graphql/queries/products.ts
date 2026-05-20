@@ -91,6 +91,20 @@ export async function getProducts(first = 12, after?: string): Promise<WPProduct
   return data ?? EMPTY_PRODUCTS
 }
 
+export async function getAllProducts(): Promise<WPProductCard[]> {
+  const allNodes: WPProductCard[] = []
+  let after: string | undefined
+
+  while (true) {
+    const data = await getProducts(100, after)
+    allNodes.push(...data.products.nodes)
+    if (!data.products.pageInfo.hasNextPage) break
+    after = data.products.pageInfo.endCursor || undefined
+  }
+
+  return allNodes
+}
+
 export async function getAllProductCategories(): Promise<WPProductCategory[]> {
   const query = `
     query AllProductCategories {
@@ -116,12 +130,12 @@ export async function getProductCategoryBySlug(slug: string): Promise<WPProductC
   return data?.productCategory ?? null
 }
 
-export async function getProductsByCategory(categorySlug: string, first = 12): Promise<WPProductsResponse> {
+export async function getProductsByCategory(categorySlug: string, first = 100): Promise<WPProductsResponse> {
   const query = `
     query ProductsByCategory($categorySlug: String!, $first: Int!) {
       products(
         first: $first
-        where: { status: "publish", category: $categorySlug }
+        where: { status: "publish", category: $categorySlug, orderby: { field: DATE, order: DESC } }
       ) {
         nodes { ${PRODUCT_CARD_FIELDS} }
         pageInfo { hasNextPage endCursor }

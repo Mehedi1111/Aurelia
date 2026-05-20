@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getProducts, getAllProductCategories } from '@/lib/graphql/queries/products'
+import { getAllProducts, getAllProductCategories } from '@/lib/graphql/queries/products'
 import ProductCard from '@/components/products/ProductCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 
@@ -11,11 +11,10 @@ export const metadata: Metadata = {
 }
 
 export default async function ShopPage() {
-  const [data, categories] = await Promise.all([
-    getProducts(100),
+  const [products, categories] = await Promise.all([
+    getAllProducts(),
     getAllProductCategories(),
   ])
-  const products = data.products.nodes
 
   const breadcrumbs = [{ label: 'Shop Fine Jewelry' }]
 

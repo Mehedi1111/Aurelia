@@ -27,10 +27,19 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   if (!post) return {}
   const { seo } = post
   const stripBrand = (t: string) => t.replace(/\s*[|—]\s*Moissanite by Aurelia\s*$/i, '').trim()
+  
+  // Intercept Yoast canonical URL: remove the cms subdomain and any trailing slash
+  let cleanCanonical = `https://moissanitebyaurelia.com/${slug}`;
+  if (seo.canonical) {
+    cleanCanonical = seo.canonical
+      .replace('https://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com')
+      .replace(/\/$/, ''); // Removes the trailing slash to match Vercel standards
+  }
+
   return {
     title: stripBrand(seo.title || post.title),
     description: seo.metaDesc || '',
-    alternates: { canonical: seo.canonical || `https://moissanitebyaurelia.com/${slug}/` },
+    alternates: { canonical: cleanCanonical },
     openGraph: {
       title: seo.opengraphTitle || seo.title,
       description: seo.opengraphDescription || seo.metaDesc,

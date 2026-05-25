@@ -36,6 +36,13 @@ const nextConfig: NextConfig = {
 
   async headers() {
     return [
+      // Cache WordPress media at Vercel edge for 30 days — eliminates repeat origin transfers
+      {
+        source: '/wp-content/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=2592000, stale-while-revalidate=86400' },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [

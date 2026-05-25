@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+function esc(str: string) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.json()
   const { name, email, subject, message } = body
@@ -8,38 +16,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
   }
 
-  // Forward to WordPress CF7 endpoint (same backend already used for proxied content)
-  const WP = 'https://moissanitebyaurelia.com'
-  const formId = 'ed12bfa'
-
-  const formData = new URLSearchParams({
-    '_wpcf7': formId,
-    '_wpcf7_version': '5.9',
-    '_wpcf7_locale': 'en_US',
-    '_wpcf7_unit_tag': `wpcf7-f${formId}-p1-o1`,
-    'your-name': name,
-    'your-email': email,
-    'your-subject': subject,
-    'your-message': message,
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Moissanite by Aurelia <contact@moissanitebyaurelia.com>',
+      to: ['hello@moissanitebyaurelia.com'],
+      reply_to: email,
+      subject: `[Contact] ${esc(subject)} — from ${esc(name)}`,
+      html: `
+        <p><strong>Name:</strong> ${esc(name)}</p>
+        <p><strong>Email:</strong> <a href="mailto:${esc(email)}">${esc(email)}</a></p>
+        <p><strong>Subject:</strong> ${esc(subject)}</p>
+        <hr>
+        <p>${esc(message).replace(/\n/g, '<br>')}</p>
+      `,
+    }),
   })
 
-  try {
-    const res = await fetch(`${WP}/wp-json/contact-form-7/v1/contact-forms/${formId}/feedback`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString(),
-    })
-
-    const data = await res.json()
-
-    if (data.status === 'mail_sent') {
-      return NextResponse.json({ ok: true })
-    }
-
-    // Fallback: if CF7 API unavailable, still return success (email can be handled via mailto)
-    return NextResponse.json({ ok: true })
-  } catch {
-    // Return success to avoid showing errors for CF7 API issues
-    return NextResponse.json({ ok: true })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    console.error('Resend error:', err)
+    return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
   }
+
+  return NextResponse.json({ ok: true })
 }

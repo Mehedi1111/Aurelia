@@ -620,12 +620,23 @@ function optimizeImages(html: string): string {
   })
 }
 
-function addPinterestButtons(html: string): string {
+function addPinterestButtons(html: string, pageUrl = ''): string {
   // Wrap <img> inside <figure class="wp-block-image"> with pin overlay
   return html.replace(
     /(<figure[^>]*class="[^"]*wp-block-image[^"]*"[^>]*>)\s*(<img\s[^>]*src="([^"]+)"[^>]*(?:alt="([^"]*)")?[^>]*>)/gi,
     (match, figOpen, img, src, alt) => {
-      const pinUrl = `https://pinterest.com/pin/create/button/?media=${encodeURIComponent(src)}&description=${encodeURIComponent(alt ?? '')}`
+      // Derive pin title from filename: strip extension, replace hyphens/underscores with spaces, title-case
+      const filename = src.split('/').pop() ?? ''
+      const title = filename
+        .replace(/\.[^.]+$/, '')
+        .replace(/[-_]+/g, ' ')
+        .replace(/\b\w/g, (c: string) => c.toUpperCase())
+
+      let pinUrl = `https://pinterest.com/pin/create/button/?media=${encodeURIComponent(src)}`
+      if (pageUrl) pinUrl += `&url=${encodeURIComponent(pageUrl)}`
+      if (alt)     pinUrl += `&description=${encodeURIComponent(alt)}`
+      if (title)   pinUrl += `&title=${encodeURIComponent(title)}`
+
       return `${figOpen}<span class="wp-pin-wrap">${img}<a href="${pinUrl}" class="wp-pin-btn" target="_blank" rel="noopener" aria-label="Save to Pinterest">${PIN_ICON}</a></span>`
     },
   )
@@ -770,7 +781,7 @@ function embedQuizSentinel(html: string): string {
 
 // ─── Master pipeline ──────────────────────────────────────────────────────────
 
-export function cleanWordPressContent(html: string): string {
+export function cleanWordPressContent(html: string, pageUrl = ''): string {
   let r = html
 
   // 0. Strip any full HTML document wrappers (custom HTML blocks sometimes paste entire pages)
@@ -812,7 +823,7 @@ export function cleanWordPressContent(html: string): string {
   r = transformLassoLinks(r)
   r = cleanAffiliateLinks(r)
   r = optimizeImages(r)
-  r = addPinterestButtons(r)
+  r = addPinterestButtons(r, pageUrl)
 
   // 9. Decorative characters → styled HTML
   r = cleanDecorativeChars(r)

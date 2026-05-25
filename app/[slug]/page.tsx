@@ -188,7 +188,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_264px] gap-12">
           {/* Article */}
           <article className="min-w-0">
-            <PostBody content={processedContent} />
+            <PostBody content={processedContent} pageUrl={`https://moissanitebyaurelia.com/${slug}/`} />
 
             {/* Tags */}
             {post.tags.nodes.length > 0 && (

@@ -273,7 +273,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               About This Product
             </h2>
             <div className="max-w-3xl">
-              <PostBody content={product.description} />
+              <PostBody content={product.description} pageUrl={`https://moissanitebyaurelia.com/product/${slug}/`} />
             </div>
           </div>
         )}

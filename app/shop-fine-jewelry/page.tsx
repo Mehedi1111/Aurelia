@@ -69,4 +69,4 @@ export default async function ShopPage() {
   )
 }
 
-export const revalidate = 3600
+export const revalidate = 86400

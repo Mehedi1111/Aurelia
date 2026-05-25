@@ -121,4 +121,4 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
   )
 }
 
-export const revalidate = 3600
+export const revalidate = 86400

@@ -129,4 +129,4 @@ export default async function NestedProductCategoryPage({ params, searchParams }
   )
 }
 
-export const revalidate = 3600
+export const revalidate = 86400

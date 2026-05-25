@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import { Marcellus, DM_Sans } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import DealsBar from '@/components/layout/DealsBar'
 import ChatBubbleLoader from '@/components/chatbot/ChatBubbleLoader'
+
+const GA_ID = 'G-8ZDM4XB7Q7'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://moissanitebyaurelia.com'),
@@ -80,6 +83,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <ChatBubbleLoader />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="ga-init" strategy="afterInteractive">{`
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js',new Date());
+          gtag('config','${GA_ID}');
+        `}</Script>
       </body>
     </html>
   )

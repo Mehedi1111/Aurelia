@@ -5,6 +5,22 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
 
+  async redirects() {
+    // WordPress used /page/N pagination; Next.js uses ?page=N
+    return [
+      {
+        source: '/category/:slug*/page/:num',
+        destination: '/category/:slug*/?page=:num',
+        permanent: true,
+      },
+      {
+        source: '/product-category/:slug*/page/:num',
+        destination: '/product-category/:slug*/?page=:num',
+        permanent: true,
+      },
+    ]
+  },
+
   async rewrites() {
     // WordPress lives at cms.moissanitebyaurelia.com (Hostinger).
     // Main domain moissanitebyaurelia.com now points to Vercel — never proxy back to it.

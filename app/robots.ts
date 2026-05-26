@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/wp-admin/', '/wp-login.php', '/go/'],
+        disallow: ['/wp-admin/', '/wp-login.php', '/go/', '/*?view='],
       },
       // Explicitly allow AI crawlers — critical for AI citations
       { userAgent: 'GPTBot',         allow: '/' },  // ChatGPT

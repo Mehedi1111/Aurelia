@@ -75,6 +75,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
     { label: product.name },
   ]
 
+  const rawPrice = (product.salePrice || product.price || '').replace(/[^0-9.]/g, '')
+  const numericPrice = parseFloat(rawPrice)
+  const hasValidPrice = !isNaN(numericPrice) && numericPrice > 0
+
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -82,13 +86,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
     description: product.shortDescription?.replace(/<[^>]+>/g, '') || '',
     image: allImages.map(img => img.sourceUrl),
     brand: { '@type': 'Brand', name: 'Moissanite by Aurelia' },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'USD',
-      price: (product.salePrice || product.price || '').replace(/[^0-9.]/g, ''),
-      availability: 'https://schema.org/InStock',
-      url: `https://moissanitebyaurelia.com/product/${slug}/`,
-    },
+    ...(hasValidPrice ? {
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'USD',
+        price: rawPrice,
+        availability: 'https://schema.org/InStock',
+        url: `https://moissanitebyaurelia.com/product/${slug}/`,
+      },
+    } : {}),
     ...(product.averageRating > 0 ? {
       aggregateRating: {
         '@type': 'AggregateRating',

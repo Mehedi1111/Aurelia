@@ -28,7 +28,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return {
     title: stripBrand(seo.title || product.name),
     description: seo.metaDesc || '',
-    alternates: { canonical: seo.canonical || `https://moissanitebyaurelia.com/product/${slug}/` },
+    alternates: {
+      canonical: (seo.canonical || `https://moissanitebyaurelia.com/product/${slug}/`)
+        .replace('https://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com'),
+    },
     openGraph: {
       title: seo.opengraphTitle || seo.title,
       description: seo.opengraphDescription || seo.metaDesc,

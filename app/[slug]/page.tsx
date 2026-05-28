@@ -28,12 +28,11 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const { seo } = post
   const stripBrand = (t: string) => t.replace(/\s*[|—]\s*Moissanite by Aurelia\s*$/i, '').trim()
   
-  // Intercept Yoast canonical URL: remove the cms subdomain and any trailing slash
-  let cleanCanonical = `https://moissanitebyaurelia.com/${slug}`;
+  // Strip the cms subdomain that Yoast emits when WordPress site URL is cms.*
+  let cleanCanonical = `https://moissanitebyaurelia.com/${slug}/`;
   if (seo.canonical) {
     cleanCanonical = seo.canonical
-      .replace('https://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com')
-      .replace(/\/$/, ''); // Removes the trailing slash to match Vercel standards
+      .replace('https://cms.moissanitebyaurelia.com', 'https://moissanitebyaurelia.com');
   }
 
   return {

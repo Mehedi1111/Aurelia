@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
+  verification: {
+    google: 'EfilWGlikv6pYC3IvRQ3n7ws4GGCF4gRipYkbvSIsuA',
+  },
 }
 
 const marcellus = Marcellus({

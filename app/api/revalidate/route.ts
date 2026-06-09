@@ -34,6 +34,20 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
-  return NextResponse.json({ status: 'Revalidation endpoint ready' })
+export async function GET(request: NextRequest) {
+  const secret = request.nextUrl.searchParams.get('secret')
+  const path = request.nextUrl.searchParams.get('path')
+
+  if (secret !== process.env.REVALIDATE_SECRET) {
+    return NextResponse.json({ error: 'Invalid secret' }, { status: 401 })
+  }
+
+  if (path) {
+    revalidatePath(path)
+    return NextResponse.json({ revalidated: true, path, timestamp: Date.now() })
+  }
+
+  revalidateTag('wordpress')
+  revalidatePath('/')
+  return NextResponse.json({ revalidated: true, timestamp: Date.now() })
 }

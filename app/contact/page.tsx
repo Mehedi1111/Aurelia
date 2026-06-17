@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import ContactForm from '@/components/ui/ContactForm'
 
+export const revalidate = 86400
+
 export const metadata: Metadata = {
   title: 'Contact Mehedi Hasan | Moissanite by Aurelia',
   description: 'Get in touch with Mehedi Hasan — jewelry educator and founder of Moissanite by Aurelia. Questions about diamonds, moissanite, media inquiries, or collaboration.',

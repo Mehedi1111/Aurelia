@@ -39,7 +39,7 @@ export async function fetchWP<T>(
   const cached = unstable_cache(
     () => _fetchWP<T>(query, variables),
     [key],
-    { revalidate: 3600, tags: ['wordpress'] },
+    { revalidate: 86400, tags: ['wordpress'] },
   )
 
   return cached()

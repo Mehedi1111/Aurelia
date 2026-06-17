@@ -21,19 +21,25 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const { slug } = await params
+export async function generateMetadata({ params, searchParams }: CategoryPageProps): Promise<Metadata> {
+  const [{ slug }, { page }] = await Promise.all([params, searchParams])
   const categorySlug = slug[slug.length - 1]
   const category = await getCategoryBySlug(categorySlug)
   if (!category) return {}
+
+  const pageNum = Math.max(1, parseInt(page || '1', 10))
+  const basePath = `https://moissanitebyaurelia.com/category/${slug.join('/')}/`
+  const canonical = pageNum === 1 ? basePath : `${basePath}?page=${pageNum}`
 
   const plainDesc = category.description
     ? category.description.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 160)
     : `Browse all ${category.name} articles and expert guides by Moissanite by Aurelia.`
   return {
-    title: `${category.name} — Expert Guides & Reviews`,
+    title: pageNum === 1
+      ? `${category.name} — Expert Guides & Reviews`
+      : `${category.name} — Expert Guides & Reviews, Page ${pageNum}`,
     description: plainDesc,
-    alternates: { canonical: `https://moissanitebyaurelia.com/category/${slug.join('/')}/` },
+    alternates: { canonical },
     openGraph: { title: `${category.name} — Expert Guides`, description: plainDesc, type: 'website' },
   }
 }
@@ -51,7 +57,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const totalPages = Math.ceil(allPosts.length / PER_PAGE)
   const currentPage = Math.min(page, Math.max(1, totalPages))
   const posts = allPosts.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
-  const basePath = `/category/${slug.join('/')}`
+  const basePath = `/category/${slug.join('/')}/`
 
   const ancestors = category.ancestors?.nodes || []
   const breadcrumbs = [

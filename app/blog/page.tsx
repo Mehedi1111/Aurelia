@@ -6,13 +6,23 @@ import PostCard from '@/components/blog/PostCard'
 import Breadcrumbs from '@/components/layout/Breadcrumbs'
 import Pagination from '@/components/ui/Pagination'
 
-export const metadata: Metadata = {
-  title: 'Jewelry Guides & Articles',
-  description: 'Expert moissanite, diamond, and gemstone guides. Buying advice, comparisons, and reviews by Mehedi Hasan.',
-  alternates: { canonical: 'https://moissanitebyaurelia.com/blog/' },
-}
-
+const BASE = 'https://moissanitebyaurelia.com'
 const PER_PAGE = 12
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}): Promise<Metadata> {
+  const { page } = await searchParams
+  const pageNum = Math.max(1, parseInt(page || '1', 10))
+  const canonical = pageNum === 1 ? `${BASE}/blog/` : `${BASE}/blog/?page=${pageNum}`
+  return {
+    title: pageNum === 1 ? 'Jewelry Guides & Articles' : `Jewelry Guides & Articles — Page ${pageNum}`,
+    description: 'Expert moissanite, diamond, and gemstone guides. Buying advice, comparisons, and reviews by Mehedi Hasan.',
+    alternates: { canonical },
+  }
+}
 
 export default async function BlogPage({
   searchParams,
@@ -95,7 +105,7 @@ export default async function BlogPage({
         </div>
       )}
 
-      <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
+      <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog/" />
     </div>
   )
 }

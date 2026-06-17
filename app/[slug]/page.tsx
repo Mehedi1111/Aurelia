@@ -189,22 +189,6 @@ export default async function PostPage({ params }: PostPageProps) {
           <article className="min-w-0">
             <PostBody content={processedContent} pageUrl={`https://moissanitebyaurelia.com/${slug}/`} />
 
-            {/* Tags */}
-            {post.tags.nodes.length > 0 && (
-              <div className="mt-10 pt-6 border-t border-border">
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.nodes.map(tag => (
-                    <Link
-                      key={tag.slug}
-                      href={`/tag/${tag.slug}/`}
-                      className="text-xs text-text-muted border border-border hover:border-accent hover:text-accent px-3 py-1 rounded-full transition-colors"
-                    >
-                      {tag.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Author box */}
             <AuthorBox />

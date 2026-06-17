@@ -26,18 +26,21 @@ export async function generateStaticParams() {
     .map(c => ({ slug: [c.parent!.node.slug, c.slug] }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const [{ slug }, { page }] = await Promise.all([params, searchParams])
   const categorySlug = slug[slug.length - 1]
   const cat = await getProductCategoryBySlug(categorySlug)
   if (!cat) return {}
+  const pageNum = Math.max(1, parseInt(page || '1', 10))
+  const base = `https://moissanitebyaurelia.com/product-category/${slug.join('/')}/`
+  const canonical = pageNum === 1 ? base : `${base}?page=${pageNum}`
   const desc = cat.description
     ? cat.description.replace(/<[^>]+>/g, '').trim().slice(0, 160)
     : `Shop ${cat.name} — hand-selected fine jewelry from trusted retailers.`
   return {
-    title: `${cat.name} Jewelry`,
+    title: pageNum === 1 ? `${cat.name} Jewelry` : `${cat.name} Jewelry — Page ${pageNum}`,
     description: desc,
-    alternates: { canonical: `https://moissanitebyaurelia.com/product-category/${slug.join('/')}/` },
+    alternates: { canonical },
   }
 }
 
@@ -57,7 +60,7 @@ export default async function NestedProductCategoryPage({ params, searchParams }
   const totalPages = Math.ceil(allProducts.length / PER_PAGE)
   const currentPage = Math.min(page, Math.max(1, totalPages))
   const products = allProducts.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
-  const basePath = `/product-category/${slug.join('/')}`
+  const basePath = `/product-category/${slug.join('/')}/`
 
   const breadcrumbs = [
     { label: 'Shop', href: '/shop-fine-jewelry/' },

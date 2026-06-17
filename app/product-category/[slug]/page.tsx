@@ -23,17 +23,20 @@ export async function generateStaticParams() {
   return cats.map(c => ({ slug: c.slug }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const [{ slug }, { page }] = await Promise.all([params, searchParams])
   const cat = await getProductCategoryBySlug(slug)
   if (!cat) return {}
+  const pageNum = Math.max(1, parseInt(page || '1', 10))
+  const base = `https://moissanitebyaurelia.com/product-category/${slug}/`
+  const canonical = pageNum === 1 ? base : `${base}?page=${pageNum}`
   const desc = cat.description
     ? cat.description.replace(/<[^>]+>/g, '').trim().slice(0, 160)
     : `Shop ${cat.name} — hand-selected fine jewelry pieces from trusted retailers.`
   return {
-    title: `${cat.name} Jewelry`,
+    title: pageNum === 1 ? `${cat.name} Jewelry` : `${cat.name} Jewelry — Page ${pageNum}`,
     description: desc,
-    alternates: { canonical: `https://moissanitebyaurelia.com/product-category/${slug}/` },
+    alternates: { canonical },
   }
 }
 
@@ -109,7 +112,7 @@ export default async function ProductCategoryPage({ params, searchParams }: Prop
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/product-category/${slug}`} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/product-category/${slug}/`} />
         </>
       ) : (
         <div className="text-center py-20 text-text-muted">

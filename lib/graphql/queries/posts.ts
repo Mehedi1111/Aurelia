@@ -52,15 +52,25 @@ const EMPTY_POSTS: WPPostsResponse = {
 }
 
 export async function getAllPostSlugs(): Promise<Array<{ slug: string }>> {
-  const query = `
-    query AllPostSlugs {
-      posts(first: 1000, where: { status: PUBLISH }) {
-        nodes { slug }
+  const all: Array<{ slug: string }> = []
+  let after: string | undefined
+  let safety = 0
+  do {
+    const query = `
+      query AllPostSlugs($after: String) {
+        posts(first: 100, after: $after, where: { status: PUBLISH }) {
+          nodes { slug }
+          pageInfo { hasNextPage endCursor }
+        }
       }
-    }
-  `
-  const data = await fetchWP<{ posts: { nodes: Array<{ slug: string }> } }>(query)
-  return data?.posts.nodes ?? []
+    `
+    const data = await fetchWP<{ posts: { nodes: Array<{ slug: string }>; pageInfo: { hasNextPage: boolean; endCursor: string } } }>(query, { after })
+    if (!data?.posts) break
+    all.push(...data.posts.nodes)
+    if (!data.posts.pageInfo.hasNextPage) break
+    after = data.posts.pageInfo.endCursor || undefined
+  } while (++safety < 20)
+  return all
 }
 
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {

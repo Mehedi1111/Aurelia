@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     description: seo.metaDesc || '',
     alternates: { canonical: cleanCanonical },
     openGraph: {
+      url: cleanCanonical,
       title: seo.opengraphTitle || seo.title,
       description: seo.opengraphDescription || seo.metaDesc,
       type: 'article',

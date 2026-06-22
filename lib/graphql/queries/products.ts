@@ -52,15 +52,25 @@ const EMPTY_PRODUCTS: WPProductsResponse = {
 }
 
 export async function getAllProductSlugs(): Promise<Array<{ slug: string }>> {
-  const query = `
-    query AllProductSlugs {
-      products(first: 1000, where: { status: "publish" }) {
-        nodes { slug }
+  const all: Array<{ slug: string }> = []
+  let after: string | undefined
+  let safety = 0
+  do {
+    const query = `
+      query AllProductSlugs($after: String) {
+        products(first: 100, after: $after, where: { status: "publish" }) {
+          nodes { slug }
+          pageInfo { hasNextPage endCursor }
+        }
       }
-    }
-  `
-  const data = await fetchWP<{ products: { nodes: Array<{ slug: string }> } }>(query)
-  return data?.products.nodes ?? []
+    `
+    const data = await fetchWP<{ products: { nodes: Array<{ slug: string }>; pageInfo: { hasNextPage: boolean; endCursor: string } } }>(query, { after })
+    if (!data?.products) break
+    all.push(...data.products.nodes)
+    if (!data.products.pageInfo.hasNextPage) break
+    after = data.products.pageInfo.endCursor || undefined
+  } while (++safety < 20)
+  return all
 }
 
 export async function getProductBySlug(slug: string): Promise<WPProduct | null> {

@@ -196,6 +196,17 @@ export default function BlueNileJewelryStorePage() {
           </div>
         </div>
 
+        {/* US map */}
+        <div className="max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-border">
+          <Image
+            src="https://cms.moissanitebyaurelia.com/wp-content/uploads/2025/09/Map-of-all-Blue-Nile-jewelry-store-locations-and-showrooms-across-the-United-States.png.webp"
+            alt="Map of all Blue Nile jewelry store locations and showrooms across the United States"
+            width={1500}
+            height={900}
+            className="w-full h-auto"
+          />
+        </div>
+
         {/* Showroom locations by state */}
         <div className="max-w-3xl mx-auto mb-12">
           <h2 className="font-serif text-2xl text-dark mb-6 text-center">Showrooms by State</h2>

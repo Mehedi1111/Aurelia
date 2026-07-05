@@ -123,6 +123,26 @@ export default function BlueNileJewelryStorePage() {
           </div>
         </header>
 
+        {/* CTA */}
+        <div className="max-w-3xl mx-auto mb-10 text-center flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="https://www.bluenile.com/jewelry-stores?a_aid=66fc3592af524&a_cid=55e51e63&chan=store_near_me"
+            target="_blank"
+            rel="sponsored noopener noreferrer"
+            className="inline-block bg-dark text-white rounded-xl px-8 py-3 text-sm hover:bg-accent transition-colors"
+          >
+            Find a Blue Nile Showroom Near You
+          </a>
+          <a
+            href="https://www.bluenile.com/jewelry-stores/virtual-appointment?a_aid=66fc3592af524&a_cid=55e51e63&chan=store_near_me"
+            target="_blank"
+            rel="sponsored noopener noreferrer"
+            className="inline-block bg-surface border border-border text-dark rounded-xl px-8 py-3 text-sm hover:border-accent hover:text-accent transition-colors"
+          >
+            Book a Virtual Appointment
+          </a>
+        </div>
+
         {/* Stats bar */}
         <div className="max-w-3xl mx-auto grid grid-cols-3 gap-4 mb-12">
           {[
@@ -186,7 +206,7 @@ export default function BlueNileJewelryStorePage() {
           </div>
           <p className="text-text-subtle text-xs mt-4 text-center">
             Location data current as of {monthYear}. Confirm hours and availability at{' '}
-            <a href="https://www.bluenile.com/showrooms" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-dark transition-colors">bluenile.com/showrooms</a>.
+            <a href="https://www.bluenile.com/jewelry-stores?a_aid=66fc3592af524&a_cid=55e51e63&chan=store_near_me" target="_blank" rel="sponsored noopener noreferrer" className="text-accent hover:text-dark transition-colors">bluenile.com/jewelry-stores</a>.
           </p>
         </div>
 

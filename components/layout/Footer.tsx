@@ -13,6 +13,7 @@ const COLS = {
   'Reviews': [
     { label: 'James Allen Review',  href: '/james-allen-review/' },
     { label: 'Blue Nile Review',    href: '/blue-nile-reviews/' },
+    { label: 'Blue Nile Store',     href: '/blue-nile-jewelry-store/' },
     { label: 'C&C Review',         href: '/charles-and-colvard-reviews/' },
     { label: 'Rare Carat Review',   href: '/rare-carat-reviews-legit/' },
     { label: 'All Reviews',         href: '/category/diamond-review/' },

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import FaqAccordion from '@/components/ui/FaqAccordion'
 import { getCurrentDateInfo } from '@/lib/utils/currentDate'
 
@@ -108,6 +109,17 @@ export default function BlueNileJewelryStorePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <div className="max-w-3xl mx-auto mb-10 rounded-2xl overflow-hidden border border-border">
+          <Image
+            src="https://cms.moissanitebyaurelia.com/wp-content/uploads/2025/09/blue-nile-jewelry-store-cover.jpg.webp"
+            alt="Blue Nile jewelry store showroom interior"
+            width={1500}
+            height={750}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
 
         <header className="max-w-3xl mx-auto text-center mb-12">
           <p className="text-accent text-[11px] uppercase tracking-widest font-medium mb-3">Showroom Locations</p>

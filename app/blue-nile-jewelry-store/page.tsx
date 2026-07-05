@@ -22,12 +22,14 @@ export async function generateMetadata(): Promise<Metadata> {
 const AF = 'a_aid=66fc3592af524&a_cid=55e51e63&chan=store_near_me'
 const BN = 'https://www.bluenile.com/jewelry-stores'
 
-const SHOWROOMS: { state: string; mall: string; city: string; address: string; slug: string }[] = [
+const WP = 'https://cms.moissanitebyaurelia.com/wp-content/uploads/2025/09'
+
+const SHOWROOMS: { state: string; mall: string; city: string; address: string; slug: string; image?: string }[] = [
   { state: 'Arizona',        mall: 'Fashion Square',         city: 'Scottsdale',    address: '7014 E Camelback Rd STE 1252, Scottsdale, AZ 85251',                  slug: 'store-fashion-square-az' },
-  { state: 'California',     mall: 'Century City',           city: 'Los Angeles',   address: '10250 Santa Monica Blvd STE 1655, Los Angeles, CA 90067',             slug: 'store-centurycity-ca' },
-  { state: 'California',     mall: 'Fashion Island',         city: 'Newport Beach', address: '1085 Newport Center DR Space 1085, Newport Beach, CA 92660',          slug: 'store-fashion-island-ca' },
-  { state: 'California',     mall: 'Roseville Galleria',     city: 'Roseville',     address: '1151 Galleria Blvd Suite 120, Roseville, CA 95678',                   slug: 'store-roseville-galleria-ca' },
-  { state: 'California',     mall: 'Valley Fair',            city: 'Santa Clara',   address: '2855 Stevens Creek Blvd STE 1105-A105, Santa Clara, CA 95050',        slug: 'store-valleyfair-ca' },
+  { state: 'California',     mall: 'Century City',           city: 'Los Angeles',   address: '10250 Santa Monica Blvd STE 1655, Los Angeles, CA 90067',             slug: 'store-centurycity-ca',        image: `${WP}/Blue-Nile-Showroom-at-Century-City.jpg.webp` },
+  { state: 'California',     mall: 'Fashion Island',         city: 'Newport Beach', address: '1085 Newport Center DR Space 1085, Newport Beach, CA 92660',          slug: 'store-fashion-island-ca',     image: `${WP}/Fashion-Island-Showroom-blue-nile-1.jpg.webp` },
+  { state: 'California',     mall: 'Roseville Galleria',     city: 'Roseville',     address: '1151 Galleria Blvd Suite 120, Roseville, CA 95678',                   slug: 'store-roseville-galleria-ca', image: `${WP}/Roseville-Galleria-Showroom-blue-nile.jpg.webp` },
+  { state: 'California',     mall: 'Valley Fair',            city: 'Santa Clara',   address: '2855 Stevens Creek Blvd STE 1105-A105, Santa Clara, CA 95050',        slug: 'store-valleyfair-ca',         image: `${WP}/Valley-Fair-Showroom-blue-nile.jpg.webp` },
   { state: 'Florida',        mall: 'Boca Town Center',       city: 'Boca Raton',    address: '6000 Glades Rd Space 1102, Boca Raton, FL 33431',                     slug: 'store-boca-raton-fl' },
   { state: 'Florida',        mall: 'Brickell City Centre',   city: 'Miami',         address: '701 S Miami Ave Space 135-B, Miami, FL 33130',                        slug: 'store-brickell-city-center-fl' },
   { state: 'Florida',        mall: 'Mall at Millenia',       city: 'Orlando',       address: '4200 Conroy Rd Space B-160, Orlando, FL 32839',                       slug: 'store-mall-at-millenia-fl' },
@@ -54,14 +56,21 @@ const BY_STATE = SHOWROOMS.reduce<Record<string, typeof SHOWROOMS>>((acc, loc) =
 }, {})
 
 const FAQ_ITEMS = [
-  { q: 'Does Blue Nile have physical stores?', a: 'Yes — Blue Nile operates a growing network of physical showrooms across the United States. These are experience-focused locations, not traditional jewelry stores. You can try on settings, consult with jewelry experts, and view diamonds, but all orders are placed online at Blue Nile\'s website pricing. There are no in-store-only prices or sales pressure.' },
-  { q: 'What can I do at a Blue Nile showroom?', a: 'At Blue Nile showrooms you can: try on a wide range of ring settings to find your preferred style, consult one-on-one with knowledgeable jewelry advisors, view diamond and gemstone samples, and use the in-store digital displays to browse Blue Nile\'s full online inventory. Orders are placed through the website — the showroom experience is designed to inform your purchase, not close it on the spot.' },
-  { q: 'Are Blue Nile showroom staff on commission?', a: 'No — Blue Nile showroom staff are salaried, not commission-based. This is intentional. The no-commission model removes the high-pressure sales environment common at traditional jewelry retailers. Staff are there to educate and assist, not to upsell. This is consistently noted as a positive aspect of the Blue Nile showroom experience in customer reviews.' },
-  { q: 'Do I need an appointment at a Blue Nile showroom?', a: 'Appointments are recommended for Blue Nile showroom visits, particularly for engagement ring consultations. Walk-ins are typically welcome, but scheduling an appointment in advance ensures a dedicated advisor is available to spend time with you. Appointments can usually be booked through the Blue Nile website.' },
-  { q: 'Can I buy a ring in a Blue Nile showroom?', a: 'Not directly in the traditional sense — Blue Nile showrooms don\'t have a conventional point-of-sale for ring inventory. Instead, the advisor assists you in placing your order through Blue Nile\'s website during or after your visit. The pricing is identical to what you\'d pay ordering online at home. Some locations may have limited finished ring inventory available for same-day purchase.' },
-  { q: 'Can I return a Blue Nile ring to a showroom?', a: 'Return policies at showrooms may vary. Blue Nile\'s standard return process involves shipping the item back using their prepaid insured label. Contact the specific showroom or Blue Nile customer service to confirm whether in-person returns are accepted at your nearest location. The standard 30-day return window and full refund policy applies regardless of return method.' },
-  { q: 'How does the Blue Nile showroom experience compare to traditional jewelry stores?', a: 'Blue Nile showrooms are designed to be fundamentally different from traditional jewelry stores. Key differences: (1) No commission sales staff — advisors are educators, not closers. (2) No in-store inventory pressure — you\'re encouraged to take time. (3) Online pricing — you pay the same whether you order in-store or at home. (4) Full inventory access — digital displays browse Blue Nile\'s entire catalog, not just what\'s physically present. (5) Appointment-based — dedicated one-on-one consultation time.' },
-  { q: 'Is the Blue Nile showroom pricing the same as online?', a: 'Yes — Blue Nile showroom pricing is identical to their online pricing. There are no showroom surcharges or in-store premiums. This is part of Blue Nile\'s model: the showroom is a service, not an additional cost layer. You can compare prices on Blue Nile\'s website from your phone while you\'re in the showroom and they will match exactly.' },
+  { q: 'Do Blue Nile stores sell jewelry?', a: 'Blue Nile locations are technically showrooms, not traditional stores. They don\'t hold sellable inventory for you to buy and take home the same day. Instead, they provide a pressure-free environment to try on high-quality replicas, get expert advice, and then use their online inventory to order the perfect piece. Your final purchase is then shipped to you or the store for pickup.' },
+  { q: 'What are the official Blue Nile jewelry store locations?', a: 'Blue Nile has showrooms in major metropolitan areas across the United States, from California and Texas to New York and Florida. We list all 22 current locations above. For the most current information, use the official store locator on their website.' },
+  { q: 'Does Blue Nile have a store near me?', a: 'With 22 showrooms nationwide across 12 states, there is a very good chance there\'s a Blue Nile store near you if you live in or near a major city. Use the Find a Showroom button above — it provides addresses, maps, and direct links to book an appointment for your local showroom.' },
+  { q: 'Are Blue Nile diamonds available at a retail store?', a: 'Yes, but in a modern way. You can\'t browse trays of diamonds like at a traditional jeweler. At a Blue Nile retail store, you sit with an expert who helps you access their entire online inventory of GIA-certified diamonds. You can view 360° videos and specs on a large screen to choose the perfect stone — giving you access to a far larger selection than any physical store could ever hold.' },
+  { q: 'How can I find a Blue Nile store location?', a: 'The best and most reliable method is to visit the official Blue Nile website. They have an interactive map and a search feature to find the showroom closest to your address or zip code. Using their official locator ensures you get the correct hours and contact information.' },
+  { q: 'What are the business hours for the Blue Nile store?', a: 'Business hours vary by showroom location and are often tailored to mall hours or local shopping district patterns. Because they operate primarily on a personalized consultation model, it is highly recommended to book an appointment rather than just walking in. Booking ensures you have a dedicated expert waiting for you.' },
+  { q: 'Can I get a ring sized at a Blue Nile store?', a: 'Absolutely. All Blue Nile showrooms offer a range of professional jewelry services, including ring sizing. If you buy a ring and it\'s not the perfect fit, or if you have an existing piece that needs adjustment, you can bring it to any location for expert service. They also offer cleaning and repair assistance.' },
+  { q: 'Can I ship my order to a Blue Nile retail store?', a: 'Yes, and it\'s one of their best features for ensuring a secure and discreet delivery. When you place your order online or in the showroom, you can choose to have it shipped directly to your nearest Blue Nile retail store. You can then pick it up at your convenience, knowing it\'s safe.' },
+  { q: 'Are there any stores like Blue Nile that I can visit?', a: 'Yes, the main competitor with a similar hybrid online/physical showroom model is James Allen. They also have physical locations in select cities where you can have a hands-on experience. Both brands are leaders in the industry.' },
+  { q: 'Is Blue Nile a good jewelry store for engagement rings?', a: 'Blue Nile is an excellent choice for engagement rings. They combine a massive inventory of GIA-certified diamonds with hundreds of settings, giving you nearly limitless options. Their price transparency and focus on diamond education make them one of the most trusted names in the business.' },
+  { q: 'Do I need an appointment to visit a Blue Nile jewelry store?', a: 'While some locations may accept walk-ins if there is availability, making an appointment is highly recommended. An appointment guarantees you\'ll have a one-on-one session with a non-commissioned Diamond & Jewelry Expert who can dedicate their time to your needs. You can book a free appointment online for your preferred date and time.' },
+  { q: 'How does the Blue Nile online store compare to in-person shopping?', a: 'It\'s designed to be a seamless experience. The online store provides endless inventory and powerful search tools, while the in-person showroom provides the tangible experience and expert guidance. You can build ideas online at home and then bring those ideas to your showroom appointment to see them come to life with physical settings.' },
+  { q: 'Can I schedule a Blue Nile pickup in store?', a: 'Yes, absolutely. Scheduling a Blue Nile pickup in store is a standard, secure, and highly recommended option. It ensures your high-value purchase is never left on a doorstep and allows you to open your package in a safe environment with an expert present to answer any final questions.' },
+  { q: 'What\'s the difference between Blue Nile and a traditional jewelry store?', a: 'The main differences are inventory, pressure, and price. Traditional stores have a limited, expensive physical inventory and commission-based staff. Blue Nile has a vast online inventory with lower overhead, salaried experts, and prices that are typically 30–50% lower. This model gives you more choices with zero sales pressure.' },
+  { q: 'Does Blue Nile have a store in New York City?', a: 'While there isn\'t a showroom in the five boroughs of NYC proper currently, Blue Nile has a significant presence in the Tri-State Area. The closest and most popular location is the Roosevelt Field showroom in Garden City, NY on Long Island. There are also two convenient showrooms in New Jersey — Short Hills and Paramus — serving the entire greater New York City metro area.' },
 ]
 
 export default function BlueNileJewelryStorePage() {
@@ -224,19 +233,30 @@ export default function BlueNileJewelryStorePage() {
                       href={`${BN}/${loc.slug}?${AF}`}
                       target="_blank"
                       rel="sponsored noopener noreferrer"
-                      className="flex items-start gap-4 px-5 py-4 bg-surface hover:bg-border transition-colors group"
+                      className="block bg-surface hover:bg-border transition-colors group overflow-hidden"
                     >
-                      <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <div className="flex-1">
-                        <p className="font-medium text-dark text-sm group-hover:text-accent transition-colors">{loc.mall} — {loc.city}</p>
-                        <p className="text-text-muted text-xs mt-0.5">{loc.address}</p>
+                      {loc.image && (
+                        <Image
+                          src={loc.image}
+                          alt={`Blue Nile ${loc.mall} showroom in ${loc.city}`}
+                          width={800}
+                          height={450}
+                          className="w-full h-48 object-cover"
+                        />
+                      )}
+                      <div className="flex items-start gap-4 px-5 py-4">
+                        <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <div className="flex-1">
+                          <p className="font-medium text-dark text-sm group-hover:text-accent transition-colors">{loc.mall} — {loc.city}</p>
+                          <p className="text-text-muted text-xs mt-0.5">{loc.address}</p>
+                        </div>
+                        <svg className="w-3.5 h-3.5 text-text-muted shrink-0 mt-0.5 group-hover:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
                       </div>
-                      <svg className="w-3.5 h-3.5 text-text-muted shrink-0 mt-0.5 group-hover:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
                     </a>
                   ))}
                 </div>

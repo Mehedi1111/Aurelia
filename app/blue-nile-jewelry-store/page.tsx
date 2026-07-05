@@ -19,25 +19,32 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const SHOWROOMS: { state: string; city: string; address: string }[] = [
-  { state: 'California', city: 'Beverly Hills', address: '9536 Brighton Way, Beverly Hills, CA 90210' },
-  { state: 'California', city: 'San Francisco', address: 'Westfield San Francisco Centre, 865 Market St, San Francisco, CA 94103' },
-  { state: 'California', city: 'San Jose', address: 'Santana Row, 3055 Olin Ave, Suite 1000, San Jose, CA 95128' },
-  { state: 'California', city: 'Los Angeles', address: 'Westfield Century City, 10250 Santa Monica Blvd, Los Angeles, CA 90067' },
-  { state: 'Texas', city: 'Dallas', address: 'NorthPark Center, 8687 N Central Expy, Dallas, TX 75225' },
-  { state: 'Texas', city: 'Houston', address: 'The Galleria, 5085 Westheimer Rd, Houston, TX 77056' },
-  { state: 'Texas', city: 'Austin', address: 'Domain Northside, 11601 Domain Blvd, Austin, TX 78758' },
-  { state: 'Florida', city: 'Miami', address: 'Aventura Mall, 19501 Biscayne Blvd, Aventura, FL 33180' },
-  { state: 'Florida', city: 'Orlando', address: 'Mall at Millenia, 4200 Conroy Rd, Orlando, FL 32839' },
-  { state: 'Florida', city: 'Tampa', address: 'International Plaza, 2223 N Westshore Blvd, Tampa, FL 33607' },
-  { state: 'New York', city: 'New York City', address: '432 Park Ave, New York, NY 10022' },
-  { state: 'Arizona', city: 'Scottsdale', address: 'Fashion Square, 7014-590 E Camelback Rd, Scottsdale, AZ 85251' },
-  { state: 'North Carolina', city: 'Charlotte', address: 'SouthPark Mall, 4400 Sharon Rd, Charlotte, NC 28211' },
-  { state: 'Oregon', city: 'Portland', address: 'Washington Square, 9585 SW Washington Square Rd, Portland, OR 97223' },
-  { state: 'Pennsylvania', city: 'Philadelphia', address: 'King of Prussia Mall, 160 N Gulph Rd, King of Prussia, PA 19406' },
-  { state: 'Washington', city: 'Seattle', address: 'University Village, 2601 NE University Village St, Seattle, WA 98105' },
-  { state: 'Virginia', city: 'McLean', address: 'Tysons Galleria, 2001 International Dr, McLean, VA 22102' },
-  { state: 'Georgia', city: 'Atlanta', address: 'Phipps Plaza, 3500 Peachtree Rd NE, Atlanta, GA 30326' },
+const AF = 'a_aid=66fc3592af524&a_cid=55e51e63&chan=store_near_me'
+const BN = 'https://www.bluenile.com/jewelry-stores'
+
+const SHOWROOMS: { state: string; mall: string; city: string; address: string; slug: string }[] = [
+  { state: 'Arizona',        mall: 'Fashion Square',         city: 'Scottsdale',    address: '7014 E Camelback Rd STE 1252, Scottsdale, AZ 85251',                  slug: 'store-fashion-square-az' },
+  { state: 'California',     mall: 'Century City',           city: 'Los Angeles',   address: '10250 Santa Monica Blvd STE 1655, Los Angeles, CA 90067',             slug: 'store-centurycity-ca' },
+  { state: 'California',     mall: 'Fashion Island',         city: 'Newport Beach', address: '1085 Newport Center DR Space 1085, Newport Beach, CA 92660',          slug: 'store-fashion-island-ca' },
+  { state: 'California',     mall: 'Roseville Galleria',     city: 'Roseville',     address: '1151 Galleria Blvd Suite 120, Roseville, CA 95678',                   slug: 'store-roseville-galleria-ca' },
+  { state: 'California',     mall: 'Valley Fair',            city: 'Santa Clara',   address: '2855 Stevens Creek Blvd STE 1105-A105, Santa Clara, CA 95050',        slug: 'store-valleyfair-ca' },
+  { state: 'Florida',        mall: 'Boca Town Center',       city: 'Boca Raton',    address: '6000 Glades Rd Space 1102, Boca Raton, FL 33431',                     slug: 'store-boca-raton-fl' },
+  { state: 'Florida',        mall: 'Brickell City Centre',   city: 'Miami',         address: '701 S Miami Ave Space 135-B, Miami, FL 33130',                        slug: 'store-brickell-city-center-fl' },
+  { state: 'Florida',        mall: 'Mall at Millenia',       city: 'Orlando',       address: '4200 Conroy Rd Space B-160, Orlando, FL 32839',                       slug: 'store-mall-at-millenia-fl' },
+  { state: 'Georgia',        mall: 'Lenox Square',           city: 'Atlanta',       address: '3393 Peachtree Road NE STE 4045, Atlanta, GA 30326',                  slug: 'store-lenox-square-ga' },
+  { state: 'Michigan',       mall: 'Somerset Collection',    city: 'Troy',          address: '2800 West Big Beaver Rd Space Q-121, Troy, MI 48084',                 slug: 'store-somerset-collection-mi' },
+  { state: 'New Hampshire',  mall: 'Rockingham Park',        city: 'Salem',         address: '99 Rockingham Park Blvd Suite W111A, Salem, NH 03079',                slug: 'store-rockingham-park-nh' },
+  { state: 'New Jersey',     mall: 'Garden State Plaza',     city: 'Paramus',       address: '1 Garden State Plaza Space 1103, Paramus, NJ 07652',                  slug: 'store-garden-state-plaza-nj' },
+  { state: 'New Jersey',     mall: 'Short Hills',            city: 'Short Hills',   address: '1200 Morris Tpke STE B254, Short Hills, NJ 07078',                    slug: 'store-short-hills-nj' },
+  { state: 'New York',       mall: 'Roosevelt Field',        city: 'Garden City',   address: '1630 Old Country Rd Unit 1101B, Garden City, NY 11530',               slug: 'store-roosevelt-ny' },
+  { state: 'North Carolina', mall: 'SouthPark Mall',         city: 'Charlotte',     address: '4400 Sharon Rd E-14B, Charlotte, NC 28211',                          slug: 'store-southpark-mall-nc' },
+  { state: 'Oregon',         mall: 'Washington Square',      city: 'Portland',      address: '9364 SW Washington Square Rd, Portland, OR 97223',                   slug: 'store-washington-square-or' },
+  { state: 'Pennsylvania',   mall: 'King of Prussia',        city: 'King of Prussia', address: '160 N Gulph Rd STE 2662, King of Prussia, PA 19406',               slug: 'store-king-of-prussia-pa' },
+  { state: 'Texas',          mall: 'Domain Northside',       city: 'Austin',        address: '11700 Rock Rose Ave STE 122B, Austin, TX 78758',                     slug: 'store-domainnorthside-tx' },
+  { state: 'Texas',          mall: 'Houston Galleria',       city: 'Houston',       address: '5085 Westheimer Rd STE B3556, Houston, TX 77056',                    slug: 'store-houston-galleria-tx' },
+  { state: 'Texas',          mall: 'NorthPark Center',       city: 'Dallas',        address: '8687 N Central Expy Suite 794, Dallas, TX 75225',                    slug: 'store-northpark-center-tx' },
+  { state: 'Virginia',       mall: 'Tysons Corner Center',   city: 'McLean',        address: '7977A Tysons Corner Ctr, McLean, VA 22102',                          slug: 'store-tysons-corner-center-va' },
+  { state: 'Washington',     mall: 'Bellevue Square',        city: 'Bellevue',      address: '177 Bellevue Sq, Bellevue, WA 98004',                                slug: 'store-bellevue-square-wa' },
 ]
 
 const BY_STATE = SHOWROOMS.reduce<Record<string, typeof SHOWROOMS>>((acc, loc) => {
@@ -82,7 +89,7 @@ export default function BlueNileJewelryStorePage() {
     ...SHOWROOMS.map(loc => ({
       '@context': 'https://schema.org',
       '@type': 'JewelryStore',
-      name: `Blue Nile — ${loc.city}`,
+      name: `Blue Nile — ${loc.mall}, ${loc.city}`,
       address: {
         '@type': 'PostalAddress',
         streetAddress: loc.address,
@@ -201,16 +208,25 @@ export default function BlueNileJewelryStorePage() {
                 </h3>
                 <div className="divide-y divide-border border border-border rounded-xl overflow-hidden">
                   {BY_STATE[state].map(loc => (
-                    <div key={loc.city} className="flex items-start gap-4 px-5 py-4 bg-surface">
+                    <a
+                      key={loc.mall}
+                      href={`${BN}/${loc.slug}?${AF}`}
+                      target="_blank"
+                      rel="sponsored noopener noreferrer"
+                      className="flex items-start gap-4 px-5 py-4 bg-surface hover:bg-border transition-colors group"
+                    >
                       <svg className="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                      <div>
-                        <p className="font-medium text-dark text-sm">{loc.city}</p>
+                      <div className="flex-1">
+                        <p className="font-medium text-dark text-sm group-hover:text-accent transition-colors">{loc.mall} — {loc.city}</p>
                         <p className="text-text-muted text-xs mt-0.5">{loc.address}</p>
                       </div>
-                    </div>
+                      <svg className="w-3.5 h-3.5 text-text-muted shrink-0 mt-0.5 group-hover:text-accent transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
                   ))}
                 </div>
               </div>

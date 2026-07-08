@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    // WordPress used /page/N pagination; Next.js uses ?page=N
     return [
+      // WordPress used /page/N pagination; Next.js uses ?page=N
       {
         source: '/category/:slug*/page/:num',
         destination: '/category/:slug*/?page=:num',
@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
       {
         source: '/product-category/:slug*/page/:num',
         destination: '/product-category/:slug*/?page=:num',
+        permanent: true,
+      },
+      // Enforce trailing slash — trailingSlash:true alone doesn't always fire at
+      // Netlify edge before GA4 records the URL, splitting pagerank across two URLs.
+      // Matches any single-segment path with no file extension (excludes /api, /_next etc.)
+      {
+        source: '/:slug([^/.]+)',
+        destination: '/:slug/',
+        permanent: true,
+      },
+      // Multi-segment paths (e.g. /category/lab-grown-diamond)
+      {
+        source: '/:a([^/.]+)/:b([^/.]+)',
+        destination: '/:a/:b/',
         permanent: true,
       },
     ]
